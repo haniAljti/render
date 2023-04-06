@@ -1,4 +1,4 @@
-# quizzz
+# quizzz(z)
 
 a [Sails v1](https://sailsjs.com) application
 
