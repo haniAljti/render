@@ -1,0 +1,66 @@
+
+header{
+    //width: 80%;
+    max-width: 1200px;
+    margin: 10px auto 10px auto;
+    border-radius: 15px;
+    padding: 5px 30px 5px 30px;
+    display: flex;
+
+    background-color: #001D3D;
+    color:#FFC300;
+
+    .header-logo{
+        width: 30%;
+        display: flex;
+        flex-direction: row;
+        float: left;
+        align-items: center;
+
+        .company{
+            margin-left: 10px;
+        }
+
+        img{
+            height: 69px;
+        }
+    }
+    .header-menu{
+        width: 70%;
+        float: right;
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            float: right;
+            height: 100%;
+        }
+        li {
+          float: left;
+          display: flex;
+          flex-direction: row;
+          height: 100%;
+          align-items: center;
+        }
+        
+        li a {
+          text-align: center;
+          font-weight: bold;
+          padding: 10px;
+          text-decoration: none;
+          color: #FFC300;
+        }
+
+        li .login-btn{
+          text-align: center;
+          padding: 5px;
+          background-color:#FFC300;
+          color: #001D3D;
+          margin-top: 3px;
+          margin-left: 50px;
+          width: 69px;
+        }
+        
+    }
+}
