@@ -1,0 +1,24 @@
+.footer {
+    padding: 20px;
+    border-radius: 15px;
+    width: 1000px;
+    background: linear-gradient(94.09deg, #001D3D 26.94%, #013063 66.31%);
+}
+
+.quizzz {
+    font-weight: bold;
+    font-size: 30px;
+    color: #B8C5D9;
+    text-align: center;
+}
+
+.quizzz-desc {
+    font-weight: normal ;
+    font-size: 20px;
+    color: #B8C5D9;
+    text-align: center;
+}
+
+.footer-out {
+    padding: 15px 15px 15px 15px;
+}
