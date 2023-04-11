@@ -1,66 +1,66 @@
 
 header{
     //width: 80%;
-    max-width: 1200px;
-    margin: 10px auto 10px auto;
-    border-radius: 15px;
-    padding: 5px 30px 5px 30px;
+    width: 100%;
+    padding: 20px;
     display: flex;
-
-    background-color: #001D3D;
     color:#FFC300;
+}
 
-    .header-logo{
-        width: 30%;
-        display: flex;
-        flex-direction: row;
-        float: left;
-        align-items: center;
+.header-container {
+  width: 1000px;
+  border-radius: 15px;
+  background: linear-gradient(94.09deg, #001D3D 26.94%, #013063 66.31%);
+}
 
-        .company{
-            margin-left: 10px;
-        }
+.header-logo{
+    display: flex;
+    flex-direction: row;
+    float: left;
+    align-items: center;
+    flex-grow: 1;
 
-        img{
-            height: 69px;
-        }
+    .company{
+        margin-left: 10px;
     }
-    .header-menu{
-        width: 70%;
-        float: right;
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            float: right;
-            height: 100%;
-        }
-        li {
-          float: left;
-          display: flex;
-          flex-direction: row;
-          height: 100%;
-          align-items: center;
-        }
-        
-        li a {
-          text-align: center;
-          font-weight: bold;
-          padding: 10px;
-          text-decoration: none;
-          color: #FFC300;
-        }
 
-        li .login-btn{
-          text-align: center;
-          padding: 5px;
-          background-color:#FFC300;
-          color: #001D3D;
-          margin-top: 3px;
-          margin-left: 50px;
-          width: 69px;
-        }
-        
+    img{
+        height: 69px;
     }
+}
+
+.header-menu{
+  float: right;
+  flex-grow: 1;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    li {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    li a {
+      text-align: center;
+      font-weight: bold;
+      padding: 10px;
+      text-decoration: none;
+      color: #FFC300;
+    }
+
+    li .login-btn{
+      text-align: center;
+      padding: 5px;
+      background-color:#FFC300;
+      color: #001D3D;
+      margin-top: 3px;
+      width: 69px;
+    }
+    
 }
