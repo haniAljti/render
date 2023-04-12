@@ -1,4 +1,10 @@
-.footer {
+
+footer, header {
+    padding: 15px 15px 15px 15px;
+    width: 100%;
+}
+
+.footer-container {
     padding: 20px;
     border-radius: 15px;
     width: 1000px;
@@ -19,6 +25,6 @@
     text-align: center;
 }
 
-.footer-out {
-    padding: 15px 15px 15px 15px;
+.social-media-icon {
+    width: 50px;
 }

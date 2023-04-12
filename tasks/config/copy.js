@@ -18,7 +18,21 @@ module.exports = function(grunt) {
         cwd: './assets',
         src: ['**/*.!(coffee|less)'],
         dest: '.tmp/public'
-      }]
+      },
+      {
+        expand: true,
+        cwd: './node_modules',
+        src: ['bootstrap/dist/css/bootstrap.*'],
+        dest: './assets/dependencies',
+        flatten: false
+      },
+      {
+        expand: true,
+        cwd: './node_modules',
+        src: ['bootstrap/dist/js/bootstrap.*'],
+        dest: './assets/dependencies',
+        flatten: false
+      },]
     },
     build: {
       files: [{
