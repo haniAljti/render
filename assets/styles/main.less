@@ -1,60 +1,91 @@
-
-body{
+body {
     margin-top: 60px;
     margin-bottom: 60px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0px 25px;
     background-color: #000814;
     color: white;
     height: 100%;
 
-    
-    .haken-im-garten{
+    p {
+        font-size: 16px;
+    }
+
+    h2 {
+        font-size: 26px;
+        font-weight: bold;
+    }
+
+    section {
+        padding: 25px 0px;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    input {
+        width: 80%;
+        height: 50px;
+        font-size: 26px;
+        text-align: center;
+        color: #000814;
+    }
+
+
+    .haken-im-garten {
         position: absolute;
         z-index: -1000;
         top: 300px;
         left: 110px;
+
         @media only screen and (max-width: 1688px) {
-            display:none;
+            display: none;
         }
     }
-    .kreis{
+
+    .kreis {
         position: absolute;
         z-index: -1000;
         top: 260px;
         right: 120px;
 
         @media only screen and (max-width: 1688px) {
-            display:none;
+            display: none;
         }
     }
 
-    .default-page{
+    .default-page {
         max-width: 1000px;
         margin-left: auto;
         margin-right: auto;
 
-        .main .row{
+        .main .row {
             margin-bottom: 20px;
         }
     }
-    
-    .quizzz-container.chart{
-        width: 300px;
+
+    .quizzz-container.chart {
+        // width: 300px;
         align-items: center;
-        img{
+
+        img {
+            padding: 20px;
             width: 200px;
         }
     }
-    .text-content{
+
+    .text-content {
         padding-top: 20px;
+
         //background-color: #000814;
         @media only screen and (max-width: 767px) {
             margin: 20px;
         }
     }
 
-    .quizzz-container{
+    .quizzz-container {
         display: flex;
         flex-direction: column;
         margin-top: auto;
@@ -68,27 +99,30 @@ body{
         }
 
 
-        .info-text{
+        .info-text {
             display: flex;
             flex-direction: column;
             text-align: center;
             padding: 10px;
+            font-size: 16px;
         }
-        .field{
+
+        .field {
             text-align: center;
             padding: 15px;
         }
-        button{
+
+        button {
             display: block;
             padding: 5px;
-            background-color:#FFC300;
+            background-color: #FFC300;
             color: #001D3D;
             margin-left: auto;
             margin-right: auto;
         }
-        input{
+
+        input {
             width: 220px;
         }
     }
 }
-
