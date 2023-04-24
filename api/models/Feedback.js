@@ -3,10 +3,7 @@
 /* eslint-disable eol-last */
 module.exports = {
     attributes: {
-        text: { type: 'string', required: true },
-        answers: {
-            collection: 'answer',
-            via: 'questId'
-        }
+        description: { type: 'string', required: true },
+        stars: { type: 'number', required: true },
     }
 }
