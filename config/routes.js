@@ -21,17 +21,27 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
 
+  //User
   '/user/new': { view: 'pages/user/new' },
   'POST /user': { controller: 'UserController', action:'create' },
 
+
+  //Quiz
+  'GET /quiz/new': { controller: 'QuizController', action:'new' },
+  'POST /quiz': { controller: 'QuizController', action: 'create' },
+
+  //Category
   '/category/new': { view: 'pages/category/new' },
   'GET /category/category': { controller: 'CategoryController', action: 'findOne' },
   'GET /category/index': { controller: 'CategoryController', action: 'find' },
   'POST /category': { controller: 'CategoryController', action:'create' },
 
+  // TODO: GET mit DELETE ersetzten
   'GET /category/:id/edit': { controller: 'CategoryController', action: 'editOne' },
   'POST /category/:id/update': { controller: 'CategoryController', action: 'updateOne' },
   'GET /category/:id/delete': { controller: 'CategoryController', action: 'destroyOne' },
+  '/quiz/new': { view: 'pages/quiz/new' },
+
 
   /***************************************************************************
   *                                                                          *

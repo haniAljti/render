@@ -3,9 +3,14 @@
 /* eslint-disable eol-last */
 module.exports = {
     attributes: {
-      userId: { type: 'string', required: true },
-      feedback: {
-        model: 'feedback'
+      userId: { type: 'string', required: false },
+      name: {
+        type: 'string',
+        required: true
+      },
+      description: {
+        type: 'string',
+        required: false
       },
       category: {
         model: 'category'

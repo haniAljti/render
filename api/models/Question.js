@@ -3,7 +3,8 @@
 /* eslint-disable eol-last */
 module.exports = {
     attributes: {
-        text: { type: 'string', required: true },
+        question: { type: 'string', required: true },
+        title: { type: 'string', required: true },
         answers: {
             collection: 'answer',
             via: 'questId'
