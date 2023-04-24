@@ -24,16 +24,7 @@ module.exports = {
 
     find: async function (req, res) {
         sails.log.debug("List all quiz....")
-        let quizes;
-        if (req.query.q && req.query.q.length > 0) {
-            quizes = await Quiz.find({
-                name: {
-                    'contains': req.query.q
-                }
-            })
-        } else {
-            quizes = await Quiz.find();
-        }
+        let quizes = await Quiz.find();
         res.view('pages/quiz/index', { quizes: quizes });
     },
 

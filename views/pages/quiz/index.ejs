@@ -1,0 +1,34 @@
+<div class="default-page">
+    <section class="main category">
+    
+        <div class="row d-flex category-container">
+            <div class="header">Alle Quizze</div>
+        </div>
+        
+        <% if (quizes.length > 0) { %>
+            <% quizes.forEach(function(quiz){ %>
+                <div class="row d-flex quizzz-container">
+                    <div class="col-sm-12 col-md-6 text-content category-content">
+                        <div class="category-info">
+                            <div class="name"><%= quiz.name %></div>
+                            <div class="description"><%= quiz.description%></div>
+                        </div>
+                        <a class="next" href="/quiz/<%= quiz.id %>">
+                            <i class="fa fa-solid fa-chevron-right"></i>
+                        </a>
+                        <div class="icons">
+                            <a href="/quiz/<%= quiz.id %>/edit"><i class="fas fa-pen edit"></i></a>
+                            <a href="/quiz/<%= quiz.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else{ %>
+            <div>Noch keine Quiz zu dieser Kategorie vorhanden.</div>
+            <div class="add-new">
+                <a href="/quiz/new"><i class="fa fa-solid fa-plus"></i>Neues Quiz erstellen</a>
+            </div>
+        <% } %>
+    </section>
+
+</div>

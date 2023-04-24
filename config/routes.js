@@ -28,6 +28,7 @@ module.exports.routes = {
 
   //Quiz
   'GET /quiz/new': { controller: 'QuizController', action:'new' },
+  'GET /quiz/index': { controller: 'QuizController', action:'find' },
   'POST /quiz': { controller: 'QuizController', action: 'create' },
   'GET /quiz/:id': { controller: 'QuizController', action: 'findOne' },
   'GET /quiz/:id/edit': { controller: 'QuizController', action: 'editOne' },
@@ -43,7 +44,6 @@ module.exports.routes = {
   'GET /category/:id/edit': { controller: 'CategoryController', action: 'editOne' },
   'POST /category/:id/update': { controller: 'CategoryController', action: 'updateOne' },
   'GET /category/:id/delete': { controller: 'CategoryController', action: 'destroyOne' },
-  '/quiz/new': { view: 'pages/quiz/new' },
 
 
   /***************************************************************************
