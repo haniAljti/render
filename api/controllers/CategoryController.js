@@ -13,7 +13,11 @@ module.exports = {
     sails.log.debug("List single category....")
     let category = await Category.findOne({ id: req.params.id });
     // TODO populate quiz for current category
-    res.view('pages/category/category', { category: category });
+    let quizes = await Quiz.find({
+        category: req.params.id
+    })
+
+    res.view('pages/category/category', { category: category, quizes: quizes  });
   },
 
   find: async function (req, res) {
