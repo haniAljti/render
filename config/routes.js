@@ -23,6 +23,7 @@ module.exports.routes = {
 
   //User
   '/user/new': { view: 'pages/user/new' },
+  'GET /user/index': { controller: 'UserController', action: 'find' },
   'POST /user': { controller: 'UserController', action:'create' },
 
 

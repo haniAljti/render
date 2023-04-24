@@ -1,0 +1,50 @@
+<div class="default-page">
+    <section class="main category">
+    
+        <div class="row d-flex category-container">
+            <div class="header"> 
+                Kategorie
+                <div class="header-info">
+                    <div class="name">Mitglieder</div>
+                    <div class="icons">
+                        <i class="fa fa-solid fa-trash delete"></i>
+                    </div>
+                </div>
+                <div class="add-new">
+                    <a href="/user/new"><i class="fa fa-solid fa-plus"></i>Neue User anlegen</a>
+                </div>
+            </div>
+            <div class="row">
+                <form class="col-md-6 mx-left">
+                    <div class="input-group">
+                        <input class="form-control border-end-0 border" type="search" placeholder="search">
+                        <span class="input-group-append">
+                            <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <% users.forEach(function(user){ %>
+            <div class="row d-flex quizzz-container">
+                <div class="col-sm-12 col-md-6 text-content category-content">
+                    <div class="category-info">
+                        <div class="name"><%= user.name %></div>
+                        <div class="description"><%= user.name%></div>
+                    </div>
+                    <a class="next" href="/category/<%= user.id %>">
+                        <i class="fa fa-solid fa-chevron-right"></i>
+                    </a>
+                    <div class="icons">
+                        <a href="/category/<%= user.id %>/edit"><i class="fas fa-pen edit"></i></a>
+                        <a href="/category/<%= user.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </section>
+
+</div>
