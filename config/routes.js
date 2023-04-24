@@ -24,6 +24,14 @@ module.exports.routes = {
   '/user/new': { view: 'pages/user/new' },
   'POST /user': { controller: 'UserController', action:'create' },
 
+  '/category/new': { view: 'pages/category/new' },
+  'GET /category/category': { controller: 'CategoryController', action: 'findOne' },
+  'GET /category/index': { controller: 'CategoryController', action: 'find' },
+  'POST /category': { controller: 'CategoryController', action:'create' },
+
+  'GET /category/:id/edit': { controller: 'CategoryController', action: 'editOne' },
+  'POST /category/:id/update': { controller: 'CategoryController', action: 'updateOne' },
+  'GET /category/:id/delete': { controller: 'CategoryController', action: 'destroyOne' },
 
   /***************************************************************************
   *                                                                          *
