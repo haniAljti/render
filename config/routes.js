@@ -21,6 +21,9 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
 
+  '/user/new': { view: 'pages/user/new' },
+  'POST /user': { controller: 'UserController', action:'create' },
+
 
   /***************************************************************************
   *                                                                          *

@@ -1,0 +1,28 @@
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
+
+<div>
+    <div class="col d-flex justify-content-center">
+        <form class="form-container" action="/user" method="post">
+            <div class="form-group">
+                <label class="form-label" for="name">Spitzname</label>
+                <input class="form-input" type="text" id="name" name="name">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Passwort</label>
+                <input class="form-input" type="password" id="password" name="passwordHash">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="birthday">Geburtstag</label>
+                <input class="form-input" type="date" id="birthday" name="birthday">
+            </div>
+
+            <div class="form-button-container">
+                <button type="submit" class="btn btn-warning btn-lg">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
