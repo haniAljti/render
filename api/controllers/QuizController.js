@@ -18,9 +18,8 @@ module.exports = {
 
     findOne: async function (req, res) {
         sails.log.debug("List single quiz....")
-        let quiz = await Quiz.findOne({ id: req.params.id });
-        // TODO populate quiz for current category
-        res.view('pages/quiz', { category: category });
+        let quiz = await Quiz.findOne({ id: req.params.id }).populate("category");
+        res.view('pages/quiz/quiz', { quiz: quiz });
     },
 
     find: async function (req, res) {
@@ -42,7 +41,8 @@ module.exports = {
     editOne: async function (req, res) {
         sails.log.debug("Edit single quiz....")
         let quiz = await Quiz.findOne({ id: req.params.id })
-        res.view('pages/category/edit', { quiz: quiz });
+        let categories = await Category.find();
+        res.view('pages/quiz/edit', { quiz: quiz, categories: categories });
     },
 
     updateOne: async function (req, res) {

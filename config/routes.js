@@ -26,18 +26,20 @@ module.exports.routes = {
   'GET /user/index': { controller: 'UserController', action: 'find' },
   'POST /user': { controller: 'UserController', action:'create' },
 
-
   //Quiz
   'GET /quiz/new': { controller: 'QuizController', action:'new' },
   'POST /quiz': { controller: 'QuizController', action: 'create' },
+  'GET /quiz/:id': { controller: 'QuizController', action: 'findOne' },
+  'GET /quiz/:id/edit': { controller: 'QuizController', action: 'editOne' },
+  'POST /quiz/:id/update': { controller: 'QuizController', action: 'updateOne' },
+  'GET /quiz/:id/delete': { controller: 'QuizController', action: 'destroyOne' },
+
 
   //Category
   '/category/new': { view: 'pages/category/new' },
   'GET /category/category': { controller: 'CategoryController', action: 'findOne' },
   'GET /category/index': { controller: 'CategoryController', action: 'find' },
   'POST /category': { controller: 'CategoryController', action:'create' },
-
-  // TODO: GET mit DELETE ersetzten
   'GET /category/:id/edit': { controller: 'CategoryController', action: 'editOne' },
   'POST /category/:id/update': { controller: 'CategoryController', action: 'updateOne' },
   'GET /category/:id/delete': { controller: 'CategoryController', action: 'destroyOne' },
