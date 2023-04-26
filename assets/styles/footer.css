@@ -1,7 +1,15 @@
+body{ min-height: 100vh; margin:0; }
 
-footer, header {
+/* The article fills all the space between header & footer */
+body{ display:flex; flex-direction:column; }
+
+.content{ flex:1; }
+
+footer,
+header {
     padding: 15px 15px 15px 15px;
     width: 100%;
+    min-height: 50px;
 }
 
 .footer-container {
@@ -19,7 +27,7 @@ footer, header {
 }
 
 .quizzz-desc {
-    font-weight: normal ;
+    font-weight: normal;
     font-size: 16px;
     color: #B8C5D9;
     text-align: center;

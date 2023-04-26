@@ -10,9 +10,6 @@
                         <i class="fa fa-solid fa-trash delete"></i>
                     </div>
                 </div>
-                <div class="description">
-                    BESCHREIBUNG
-                </div>
                 <div class="add-new">
                     <a href="/category/new"><i class="fa fa-solid fa-plus"></i>Neue Kategorie erstellen</a>
                 </div>
@@ -20,21 +17,30 @@
         </div>
 
         <% categories.forEach(function(category){ %>
-            <div class="row d-flex quizzz-container">
-                <div class="col-sm-12 col-md-6 text-content category-content">
-                    <div class="category-info">
-                        <div class="name"><%= category.name %></div>
-                        <div class="description"><%= category.description%></div>
+            <div class="row d-flex justify-content-center">
+                <div class="test-container">
+                    <div class="category-info d-flex flex-row align-items-center">
+                        <div>
+                            <div class="name">
+                                <%= category.name %>
+                            </div>
+                            <div class="description">
+                                <%= category.description %>
+                            </div>
+                        </div>
+
+                        <a href="/category/<%= category.id %>" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
+
                     </div>
-                    <a class="next" href="/category/<%= category.id %>">
-                        <i class="fa fa-solid fa-chevron-right"></i>
-                    </a>
+
                     <div class="icons">
                         <a href="/category/<%= category.id %>/edit"><i class="fas fa-pen edit"></i></a>
                         <a href="/category/<%= category.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                     </div>
+
                 </div>
             </div>
+
         <% }); %>
     </section>
 

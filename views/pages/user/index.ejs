@@ -5,7 +5,7 @@
     
         <div class="row d-flex category-container">
             <div class="header"> 
-                Kategorie
+                User
                 <div class="header-info">
                     <div class="name">Mitglieder</div>
                     <div class="icons">
@@ -45,19 +45,27 @@
               </div>
 
         <% users.forEach(function(user){ %>
-            <div class="row d-flex quizzz-container">
-                <div class="col-sm-12 col-md-6 text-content category-content">
-                    <div class="category-info">
-                        <div class="name"><%= user.name %></div>
-                        <div class="description"><%= user.name%></div>
+            <div class="row d-flex justify-content-center">
+                <div class="test-container">
+                    <div class="category-info d-flex flex-row align-items-center">
+                        <div>
+                            <div class="name">
+                                <%= user.name %>
+                            </div>
+                            <div class="description">
+                                <%= user.description %>
+                            </div>
+                        </div>
+
+                        <a href="/user/<%= user.id %>" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
+
                     </div>
-                    <a class="next" href="/user/<%= user.id %>">
-                        <i class="fa fa-solid fa-chevron-right"></i>
-                    </a>
+
                     <div class="icons">
                         <a href="/user/<%= user.id %>/edit"><i class="fas fa-pen edit"></i></a>
                         <a href="/user/<%= user.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                     </div>
+
                 </div>
             </div>
         <% }); %>
