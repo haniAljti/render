@@ -7,8 +7,6 @@ module.exports = {
         isCorrect: { type: 'boolean', required: true },
         questId: {
             model: 'question',
-            via: 'questId',
-            through: 'answers'
         }
     }
 }

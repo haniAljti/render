@@ -8,6 +8,9 @@ module.exports = {
         answers: {
             collection: 'answer',
             via: 'questId'
+        },
+        quiz: {
+            model: 'quiz'
         }
     }
 }
