@@ -35,6 +35,13 @@ module.exports.routes = {
   'POST /quiz/:id/update': { controller: 'QuizController', action: 'updateOne' },
   'GET /quiz/:id/delete': { controller: 'QuizController', action: 'destroyOne' },
 
+  //Question
+  'GET /quiz/:id/question/new': { controller: 'QuestionController', action: 'new' },
+  'POST /quiz/:id/question': { controller: 'QuestionController', action: 'create' },
+  'GET /question/:id/delete': { controller: 'QuestionController', action: 'destroyOne' },
+  'GET /question/:id': { controller: 'QuestionController', action: 'findOne' },
+  'GET /question/:id/edit': { controller: 'QuestionController', action: 'editOne' },
+  'POST /question/:id/update': { controller: 'QuestionController', action: 'updateOne' },
 
   //Category
   '/category/new': { view: 'pages/category/new' },
