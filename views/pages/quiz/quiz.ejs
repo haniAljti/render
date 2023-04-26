@@ -1,18 +1,25 @@
 <div class="default-page">
-    <section class="main">
-    
+    <section class="main category">
+
         <div class="col d-flex flex-column">
             <div class="quiz-element">Quiz</div>
 
             <div class="quiz-element-container">
-                <div class="quiz-element-name"><%= quiz.name %></div>
+                <div class="quiz-element-name">
+                    <%= quiz.name %>
+                </div>
                 <div class="d-flex flex-row">
                     <a href="/quiz/<%= quiz.id %>/edit"><i class="fas fa-pen edit"></i></a>
                     <a href="/quiz/<%= quiz.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                 </div>
             </div>
+
             <div class="quiz-element-description">
                 <%= quiz.description %>
+            </div>
+
+            <div class="add-new">
+                <a href="/quiz/<%= quiz.id %>/question/new"><i class="fa fa-solid fa-plus"></i>Neue Frage hinzufügen</a>
             </div>
 
             <% quiz.questions.forEach(function(question){ %>
@@ -30,7 +37,9 @@
                         </div>
                     </div>
                 </div>
-            <% }); %>
+
+                
+                <% }); %>
         </div>
 
     </section>

@@ -7,7 +7,7 @@
 
         <div class="form-group">
             <label class="form-label" for="question">Fragestellung</label>
-            <textarea class="form-input" type="textarea" rows="5" id="question" name="question"></textarea>
+            <textarea class="form-input quiz-element-textarea" type="textarea" rows="5" id="question" name="question"></textarea>
         </div>
 
         <div class="quiz-element-container">
@@ -18,33 +18,41 @@
         <div id="answer-container">
 
             <div class="quizzz-container">
+                <div>
+                    <a class="delete-answer"><i onclick="removeAnswer()" class="fa fa-solid fa-trash delete"></i></a>
+                </div>
+
                 <div class="form-group">
                     <label class="form-label" for="text">Antwort</label>
-                    <input class="form-input" type="text" id="text" name="answers[][text]" style="width: 100%;">
+                    <input class="form-input" type="text" id="text" name="answers[][text]" style="width: 100%;"">
                 </div>
 
                 <div class="form-group d-flex flex-row">
-                    <input class="form-checkbox" type="checkbox" id="correct-answer-0" name="answers[][isCorrect]">
-                    <label class="form-label" for="correct-answer-0">Ist rechtige Antwort</label>
+                    <input class="form-checkbox" type="checkbox" id="correct-answer-0" name="answers[][isCorrect]"">
+                    <label class="form-label" for="correct-answer-0">Ist richtige Antwort</label>
                 </div>
             </div>
 
             <div class="quizzz-container">
+                <div>
+                    <a class="delete-answer"><i onclick="removeAnswer()" class="fa fa-solid fa-trash delete"></i></a>
+                </div>
+
                 <div class="form-group">
                     <label class="form-label" for="text">Antwort</label>
-                    <input class="form-input" type="text" id="text" name="text" style="width: 100%;">
+                    <input class="form-input" type="text" id="text" name="answers[][text]" style="width: 100%;"">
                 </div>
 
                 <div class="form-group d-flex flex-row">
-                    <input class="form-checkbox" type="checkbox" id="correct-answer-1" name="isCorrect">
-                    <label class="form-label" for="correct-answer-1">Ist rechtige Antwort</label>
+                    <input class="form-checkbox" type="checkbox" id="correct-answer-1" name="answers[][isCorrect]"">
+                    <label class="form-label" for="correct-answer-1">Ist richtige Antwort</label>
                 </div>
             </div>
 
         </div>
 
         <div class="form-button-container">
-            <button type="button" class="btn btn-warning btn-lg" onclick="sendForm('<%= quiz.id %>')">Submit</button>
+            <button type="button" class="btn btn-warning btn-lg" onclick="postQuestion('<%= quiz.id %>')">Submit</button>
         </div>
     </form>
 </div>
