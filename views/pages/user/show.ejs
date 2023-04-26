@@ -1,19 +1,29 @@
 <div>
+    <div class="col d-flex justify-content-center header">
+        <div class="header-info">
+            <div class="name">Mitglied: <%= user.name %></div>
+            <div class="icons">
+                <a href="/user/<%= user.id %>/edit"><i class="fas fa-pen edit"></i></a>
+                <a href="/user/<%= user.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
+                
+            </div>
+        </div>
+    </div>
     <div class="col d-flex justify-content-center">
         <form class="form-container" action="/user" method="post">
             <div class="form-group">
                 <label class="form-label" for="name">Spitzname</label>
-                <input class="form-input" type="text" id="name" name="name">
+                <input class="form-input" type="text" id="name" name="name" value="<%= user.name %>" disabled>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="password">Passwort</label>
-                <input class="form-input" type="password" id="password" name="passwordHash">
+                <input class="form-input" type="password" id="password" name="passwordHash" value="*******" disabled>
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="birthday">Geburtstag</label>
-                <input class="form-input" type="date" id="birthday" name="birthday">
+                <input class="form-input" type="date" id="birthday" name="birthday" value="<%= user.birthday %>" disabled>
             </div>
 
             <div class="form-button-container">

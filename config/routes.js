@@ -24,7 +24,12 @@ module.exports.routes = {
   //User
   '/user/new': { view: 'pages/user/new' },
   'GET /user/index': { controller: 'UserController', action: 'find' },
+  'GET /user/show': { controller: 'UserController', action: 'findOne' },
+  'GET /user/:id/edit': { controller: 'UserController', action: 'editOne' },
+  'GET /user/:id/delete': { controller: 'UserController', action: 'destroyOne' },
   'POST /user': { controller: 'UserController', action:'create' },
+  'POST /user/:id/update': { controller: 'UserController', action: 'updateOne' },
+  
 
   //Quiz
   'GET /quiz/new': { controller: 'QuizController', action:'new' },
