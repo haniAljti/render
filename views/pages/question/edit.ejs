@@ -19,8 +19,12 @@
 
             <% question.answers.forEach(function(answer, index){ %>
                 <div class="quizzz-container">
+
+                    <div>
+                        <a class="delete-answer"><i onclick="removeAnswer()" class="fa fa-solid fa-trash delete"></i></a>
+                    </div>
+
                     <div class="form-group">
-                        <a href="/question/<%= question.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                         <label class="form-label" for="text">Antwort</label>
                         <input class="form-input" type="text" id="text" name="answers[][text]" style="width: 100%;" value="<%= answer.text %>">
                     </div>
