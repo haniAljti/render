@@ -64,14 +64,14 @@ module.exports = {
         var updatedQuestion = await Question.updateOne({ id: req.params.id }).set(questionData)
 
         // Destroy All Answers
-        await Answer.destroy({ questId: updatedQuestion })
+        await Answer.destroy({ questId: updatedQuestion.id })
 
         // Recreate the Answer records
         var answersData = req.body.answers.map(function (answer) {
             return {
                 text: answer.text,
                 isCorrect: answer.isCorrect,
-                questId: createdQuestion.id
+                questId: updatedQuestion.id
             };
         });
 
