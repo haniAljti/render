@@ -1,3 +1,5 @@
+<script href="/assets/js/quiz/new.js"></script>
+
 <div class="default-page">
     <section class="main category">
     
@@ -14,19 +16,33 @@
                     <a href="/user/new"><i class="fa fa-solid fa-plus"></i>Neue User anlegen</a>
                 </div>
             </div>
-            <div class="row">
-                <form class="col-md-6 mx-left">
-                    <div class="input-group">
-                        <input class="form-control border-end-0 border" type="search" placeholder="search">
-                        <span class="input-group-append">
-                            <button class="btn btn-outline-secondary bg-white border-start-0 border-bottom-0 border ms-n5" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </div>
+
+
+            <form action="/user" class="search-container">
+                <div class="row">    
+                 <div class="col-xs-8 col-md-6">
+                  <div class="input-group">
+                   <div class="input-group-btn search-panel">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <span id="search_concept">Alles</span> 
+                    </button>
+                    <ul class="dropdown-menu scrollable-dropdown" role="menu">
+                        <li><a href="name">Name</a></li>
+                      <li><a href="birthday">Geburtstag</a></li>
+                      <li><a href="count">Anzahl Quiz</a></li>
+                    </ul>
+                   </div>
+                   <input type="hidden" name="filter" value="all" id="filter">
+                   <input type="text" class="form-control" name="q" id="search" placeholder="Search">
+                    <span class="input-group-btn">
+                     <button class="btn btn-default" type="submit">
+                        <i class="fa fa-search"></i>
+                     </button>
+                    </span>
+                  </div>
+                 </div>
+                </div>
+              </div>
 
         <% users.forEach(function(user){ %>
             <div class="row d-flex quizzz-container">
@@ -35,12 +51,12 @@
                         <div class="name"><%= user.name %></div>
                         <div class="description"><%= user.name%></div>
                     </div>
-                    <a class="next" href="/category/<%= user.id %>">
+                    <a class="next" href="/user/<%= user.id %>">
                         <i class="fa fa-solid fa-chevron-right"></i>
                     </a>
                     <div class="icons">
-                        <a href="/category/<%= user.id %>/edit"><i class="fas fa-pen edit"></i></a>
-                        <a href="/category/<%= user.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
+                        <a href="/user/<%= user.id %>/edit"><i class="fas fa-pen edit"></i></a>
+                        <a href="/user/<%= user.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                     </div>
                 </div>
             </div>
