@@ -2,11 +2,12 @@
     <section class="main">
     
         <div class="col d-flex flex-column">
-            <div class="quiz-element">Question</div>
+            
+            <div class="header">Question</div>
 
-            <div class="quiz-element-container">
-                <div class="quiz-element-name"><%= question.question %></div>
-                <div class="d-flex flex-row">
+            <div class="header-info">
+                <div class="name"><%= question.question %></div>
+                <div class="icons">
                     <a href="/question/<%= question.id %>/edit"><i class="fas fa-pen edit"></i></a>
                     <a href="/question/<%= question.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                 </div>

@@ -16,7 +16,7 @@ function addAnswer() {
     
                 <div class="form-group d-flex flex-row">
                     <input class="form-checkbox" type="checkbox" id="correct-answer-${$(".quizzz-container").length - 1}" name="isCorrectAnswer">
-                    <label class="form-label" for="correct-answer-${$(".quizzz-container").length - 1}">Ist rechtige Antwort</label>
+                    <label class="form-label" for="correct-answer-${$(".quizzz-container").length - 1}">Ist richtige Antwort</label>
                 </div>
             </div>
             `

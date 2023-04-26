@@ -8,7 +8,6 @@
                 <div class="icons">
                     <a href="/category/<%= category.id %>/edit"><i class="fas fa-pen edit"></i></a>
                     <a href="/category/<%= category.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
-                    
                 </div>
             </div>
             <div class="description">
@@ -22,21 +21,29 @@
         </div>
         <% if (quizes.length > 0) { %>
             <% quizes.forEach(function(quiz){ %>
-                <div class="row d-flex quizzz-container">
-                    <div class="col-sm-12 col-md-6 text-content category-content">
-                        <div class="category-info">
-                            <div class="name"><%= quiz.name %></div>
-                            <div class="description"><%= quiz.description%></div>
+                <div class="row d-flex justify-content-center">
+                    <div class="test-container">
+                        <div class="category-info d-flex flex-row align-items-center">
+                            <div>
+                                <div class="name">
+                                    <%= quiz.name %>
+                                </div>
+                                <div class="description">
+                                    <%= quiz.description %>
+                                </div>
+                            </div>
+    
+                            <a href="/quiz/<%= quiz.id %>" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
+    
                         </div>
-                        <a class="next" href="/quiz/<%= quiz.id %>">
-                            <i class="fa fa-solid fa-chevron-right"></i>
-                        </a>
+    
                         <div class="icons">
                             <a href="/quiz/<%= quiz.id %>/edit"><i class="fas fa-pen edit"></i></a>
                             <a href="/quiz/<%= quiz.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                         </div>
+    
                     </div>
-                </div>
+                </div>  
             <% }); %>
         <% } else{ %>
             <div>Noch keine Quiz zu dieser Kategorie vorhanden.</div>

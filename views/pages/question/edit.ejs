@@ -19,7 +19,6 @@
 
             <% question.answers.forEach(function(answer, index){ %>
                 <div class="quizzz-container">
-
                     <div>
                         <a class="delete-answer"><i onclick="removeAnswer()" class="fa fa-solid fa-trash delete"></i></a>
                     </div>
@@ -31,7 +30,7 @@
     
                     <div class="form-group d-flex flex-row">
                         <input class="form-checkbox" type="checkbox" id="correct-answer-<%= index %>" name="answers[][isCorrect]" value="<%= answer.isCorrect %>">
-                        <label class="form-label" for="correct-answer-<%= index %>">Ist rechtige Antwort</label>
+                        <label class="form-label" for="correct-answer-<%= index %>">Ist richtige Antwort</label>
                     </div>
                 </div>
             <% }); %>
