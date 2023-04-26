@@ -18,6 +18,10 @@ module.exports = {
     questions: {
       collection: 'question',
       via: 'quiz'
+    },
+    feedbacks: {
+      collection: 'feedback',
+      via: 'quiz'
     }
   }
 };

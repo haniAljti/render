@@ -57,6 +57,8 @@ module.exports.routes = {
   'POST /category/:id/update': { controller: 'CategoryController', action: 'updateOne' },
   'GET /category/:id/delete': { controller: 'CategoryController', action: 'destroyOne' },
 
+  //Feedback
+  'POST /quiz/:id/feedback/:stars': { controller: 'FeedbackController', action: 'create' },
 
   /***************************************************************************
   *                                                                          *

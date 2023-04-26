@@ -15,6 +15,19 @@
                 <%= quiz.description %>
             </div>
 
+            <form action="/quiz/<%= quiz.id %>/feedback" method="post">
+                <span class="review-holder">
+                    <span class="review" data-id="<%= quiz.id %>">
+                        <span data-description="hate it"></span>
+                        <span data-description="don't like it"></span>
+                        <span data-description="it's ok"></span>
+                        <span data-description="it's good"></span>
+                        <span data-description="it's great"></span>
+                    </span>
+                </span>
+            </form>
+    
+
             <% quiz.questions.forEach(function(question){ %>
                 <div class="row d-flex quizzz-container">
                     <div class="col-sm-12 col-md-6 text-content category-content">

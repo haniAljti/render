@@ -5,5 +5,8 @@ module.exports = {
     attributes: {
         description: { type: 'string', required: true },
         stars: { type: 'number', required: true },
+        quiz: {
+            model: 'quiz'
+        }
     }
 }
