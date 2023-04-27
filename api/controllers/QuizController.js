@@ -18,7 +18,8 @@ module.exports = {
 
     findOne: async function (req, res) {
         sails.log.debug("List single quiz....")
-        let quiz = await Quiz.findOne({ id: req.params.id }).populate("category").populate("questions");
+        let quiz = await Quiz.findOne({ id: req.params.id }).populate("category").populate("questions").populate("feedbacks");
+        sails.log.debug(JSON.stringify(quiz.feedbacks));
         res.view('pages/quiz/quiz', { quiz: quiz });
     },
 

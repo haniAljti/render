@@ -3,7 +3,7 @@
 /* eslint-disable eol-last */
 module.exports = {
     attributes: {
-        description: { type: 'string', required: true },
+        description: { type: 'string', required: false },
         stars: { type: 'number', required: true },
         quiz: {
             model: 'quiz'

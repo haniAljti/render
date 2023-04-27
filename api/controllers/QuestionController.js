@@ -37,7 +37,7 @@ module.exports = {
 
         await Answer.createEach(answersData)
 
-        res.redirect('/quiz/' + req.params.id);
+        res.redirect('pages/quiz/' + req.params.id);
     },
 
     findOne: async function (req, res) {
