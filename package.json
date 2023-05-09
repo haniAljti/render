@@ -13,6 +13,7 @@
     "jquery": "^3.6.4",
     "sails": "^1.5.4",
     "sails-hook-grunt": "^5.0.0",
+    "sails-hook-organics": "^2.2.1",
     "sails-hook-orm": "^4.0.0",
     "sails-hook-sockets": "^2.0.0",
     "sails-mysql": "^3.0.1"
