@@ -21,6 +21,14 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
 
+  //login
+  'GET /signup':             { action: 'entrance/view-signup' },
+  'GET /login':              { action: 'entrance/view-login' },
+
+  'GET /logout':                         { action: 'account/logout' },
+  'POST  /login':                        { action: 'entrance/login' },
+
+
   //User
   '/user/new': { view: 'pages/user/new' },
   'GET /user/index': { controller: 'UserController', action: 'find' },
