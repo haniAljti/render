@@ -18,5 +18,25 @@ module.exports.policies = {
   ***************************************************************************/
 
   // '*': true,
+  '*': 'is-logged-in',
 
+  // Bypass the `is-logged-in` policy for:
+  'entrance/*': true,
+  'account/logout': true,
+  
+  CategoryController: {
+    '*': true,
+  },
+  FeedbackController:{
+    '*': true,
+  },
+  QuestionController:{
+    '*': 'is-super-admin',
+  },
+  QuizController:{
+    '*': true,
+  },
+  UserController:{
+    '*': true,
+  }
 };
