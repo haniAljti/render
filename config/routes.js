@@ -22,13 +22,11 @@ module.exports.routes = {
   '/': { view: 'pages/homepage' },
 
   //login
-  'GET /signup':             { action: 'entrance/view-signup' },
-  'POST /signup':            { action: 'entrance/signup' },
-  'GET /login':              { action: 'entrance/view-login' },
-
-  'GET /logout':                         { action: 'account/logout' },
-  'POST  /login':                        { action: 'entrance/login' },
-
+  'GET /signup': { action: 'entrance/view-signup' },
+  'POST /signup': { action: 'entrance/signup' },
+  'GET /login': { action: 'entrance/view-login' },
+  'GET /logout': { action: 'account/logout' },
+  'POST /login': { action: 'entrance/login' },
 
   //User
   '/user/new': { view: 'pages/user/new' },
