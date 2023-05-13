@@ -19,7 +19,7 @@
 
             <form action="/quiz/<%= quiz.id %>/feedback" method="post">
                 <span class="review-holder">
-                    <span class="review" data-id="<%= quiz.id %>">
+                    <span class="review" data-id="<%= quiz.id %>" data-averageStars="<%= quiz.averageStars %>">
                         <span data-description="hate it"></span>
                         <span data-description="don't like it"></span>
                         <span data-description="it's ok"></span>

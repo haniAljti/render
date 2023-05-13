@@ -286,11 +286,11 @@ body {
     clear: both;
     display: inline-block;
 }
-.review:hover span {
+.review:hover span, .review .selected {
     color: orange;
 }
-.review:hover span:before {
-    content: "\e600";
+.review:hover span:before, .review .selected {
+    content: "\e600" !important;
 }
 .review span {
    /* reflection css effect */
@@ -312,10 +312,10 @@ body {
     white-space: nowrap;
     color: #fff;
 }
-.review span:before {
+.review span:before, .review .selected {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    content: "\e601";
+    content: "\e600";
     font-family: 'apple';
     font-style: normal;
     font-weight: normal;
@@ -326,7 +326,7 @@ body {
 .review span:hover ~ span {
     color: #fff;
 }
-.review span:hover ~ span:before {
+.review span:hover ~ span:before, .review .selected{
     content: "\e601";
 }
 @font-face {

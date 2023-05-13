@@ -12,11 +12,28 @@ module.exports = {
 
     var createdFeedback = await Feedback.create(feedbackData).fetch();
 
-    
-    sails.log.debug("FEEEEEDBACK...." + createdFeedback);
     let quiz = await Quiz.findOne({ id: req.params.id }).populate("category").populate("questions").populate("feedbacks");
     
-    sails.log.debug(JSON.stringify(quiz.feedbacks));
+    let averageStars = 0;
+    let count = 0;
+    quiz.feedbacks.forEach(feedback => {
+      averageStars += feedback.stars;
+      count++;
+      sails.log.debug("averageStars...." + averageStars);  
+      sails.log.debug("count...." + count);  
+    });
+
+    averageStars = Math.round(averageStars / count);
+    
+    sails.log.debug("FEEEEEDBACK...." + averageStars);   
+
+    var quizData = {
+      averageStars: averageStars
+    };
+
+     
+
+  var updatedQuiz = await Quiz.updateOne({ id: quiz.id }).set(quizData);
 
     res.view('pages/quiz/quiz', { quiz: quiz });
   },

@@ -22,6 +22,10 @@ module.exports = {
     feedbacks: {
       collection: 'feedback',
       via: 'quiz'
-    }
+    },
+    averageStars: {
+      type: 'number',
+      required: false
+    },
   }
 };
