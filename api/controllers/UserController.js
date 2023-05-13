@@ -43,6 +43,11 @@ module.exports = {
 
   findOne: async function (req, res) {
     sails.log.debug("List single user....")
+    let userId = req.session.userId
+
+    if (userId != req.params.id)
+      return res.forbidden();
+
     let user = await User.findOne({ id: req.params.id });
     const offset = user.birthday.getTimezoneOffset()
     let newBirthday = new Date(user.birthday.getTime() - (offset * 60 * 1000))
@@ -52,6 +57,11 @@ module.exports = {
 
   editOne: async function (req, res) {
     sails.log.debug("Edit single user....")
+    let userId = req.session.userId
+
+    if (userId != req.params.id)
+      return res.forbidden();
+
     let user = await User.findOne({ id: req.params.id })
     const offset = user.birthday.getTimezoneOffset()
     let newBirthday = new Date(user.birthday.getTime() - (offset * 60 * 1000))
@@ -61,7 +71,13 @@ module.exports = {
 
   updateOne: async function (req, res) {
     sails.log.debug("Update single user....")
-    let categorusery = await User.updateOne({ id: req.params.id }).set(req.body);
+
+    let userId = req.session.userId
+
+    if (userId != req.params.id)
+      return res.forbidden();
+
+    await User.updateOne({ id: req.params.id }).set(req.body);
     res.redirect('/user/' + req.params.id);
   },
 

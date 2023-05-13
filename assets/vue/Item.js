@@ -13,7 +13,7 @@ export default {
                     <div class="description">{{ description }}</div>
                 </div>
 
-                <a :href="href" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
+                <a href="/category/<%= category.id %>/edit" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
 
             </div>
 

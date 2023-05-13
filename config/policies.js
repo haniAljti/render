@@ -23,7 +23,7 @@ module.exports.policies = {
   // Bypass the `is-logged-in` policy for:
   'entrance/*': true,
   'account/logout': true,
-  
+
   CategoryController: {
     '*': true,
   },
@@ -31,12 +31,15 @@ module.exports.policies = {
     '*': true,
   },
   QuestionController:{
-    '*': 'is-super-admin',
+    '*': true,
   },
   QuizController:{
     '*': true,
   },
   UserController:{
-    '*': true,
+    '*': 'is-super-admin',
+    editOne: 'is-logged-in',
+    findOne: 'is-logged-in',
+    updateOne: 'is-logged-in'
   }
 };

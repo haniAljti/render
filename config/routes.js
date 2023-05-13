@@ -36,7 +36,6 @@ module.exports.routes = {
   'GET /user/:id/delete': { controller: 'UserController', action: 'destroyOne' },
   'POST /user': { controller: 'UserController', action:'create' },
   'POST /user/:id/update': { controller: 'UserController', action: 'updateOne' },
-  
 
   //Quiz
   'GET /quiz/new': { controller: 'QuizController', action:'new' },

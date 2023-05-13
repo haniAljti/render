@@ -18,7 +18,24 @@
             </div>
 
             <% categories.forEach(function(category){ %>
-                <category name='<%= category.name %>' description=<%=category.description %> clickUrl="kdmls" />
+                <div class="row d-flex justify-content-center">
+                    <div class="test-container">
+                        <div class="category-info d-flex flex-row align-items-center">
+                            <div>
+                                <div class="name">{{ name }}</div>
+                                <div class="description">{{ description }}</div>
+                            </div>
+
+                            <a href="/category/<%= category.id %>" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
+
+                        </div>
+
+                        <div class="icons">
+                            <a href="/category/<%= category.id %>/edit"><i class="fas fa-pen edit"></i></a>
+                            <a href="/category/<%= category.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
+                        </div>
+                    </div>
+                </div>
             <% }); %>
         </section>
 
