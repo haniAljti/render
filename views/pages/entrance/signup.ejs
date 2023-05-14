@@ -1,36 +1,142 @@
-<div id="signup">
-    <div class="container-fluid pt-5 pb-5">
-      <h1 class="text-center">Create an account</h1>
-      <div style="max-width: 450px;" class="mx-auto" >
-        <p class="text-center">Let's get started! Becoming a member is free and only takes a few minutes.</p>
-        <hr/>
-        <form action="/signup" method="POST">
-          <div class="form-group">
-            <label for="full-name">Full name</label>
-            <input class="form-control" id="full-name" name="fullName" type="text"  placeholder="Sturgis P. Sturgeon" autocomplete="name" focus-first>
-            <div class="invalid-feedback">Please enter your full name.</div>
-          </div>
-          <div class="form-group">
-            <label for="email-address">Email address</label>
-            <input class="form-control" id="emaila-address" name="emailAddress" type="email"  placeholder="sturgeon@example.com" autocomplete="email">
-            <div class="invalid-feedback">Please enter a valid email address.</div>
-          </div>
-          <div class="form-group">
-            <label for="password">Choose a password</label>
-            <input class="form-control" id="password" name="password" type="password"  placeholder="••••••••" autocomplete="new-password">
-            <div class="invalid-feedback">Please enter a password.</div>
-          </div>
-          <div class="form-group">
-            <label for="confirm-password">Confirm password</label>
-            <input class="form-control" id="confirm-password" name="confirmPassword" type="password"  placeholder="••••••••" autocomplete="new-password">
-            <div class="invalid-feedback">Your password and confirmation do not match.</div>
-          </div>
-          <span>It looks like there's already an account with your email address. If you forgot your password, you can recover it <a href="password/forgot">here</a>.</span>
-          <div class="form-group">
-            <button type="submit" class="btn-dark btn-lg btn-block">Create account</button>
-          </div>
-        </ajax>
-        <p class="text-center">Have an account? <a href="/login">Sign in</a></p>
-      </div>
+<!--<div id="signup">-->
+<!--    <div class="container-fluid pt-5 pb-5">-->
+<!--      <h1 class="text-center">Create an account</h1>-->
+<!--      <div style="max-width: 450px;" class="mx-auto" >-->
+<!--        <p class="text-center">Let's get started! Becoming a member is free and only takes a few minutes.</p>-->
+<!--        <hr/>-->
+<!--        <form action="/signup" method="POST">-->
+<!--          <div class="form-group">-->
+<!--            <label for="full-name">Full name</label>-->
+<!--            <input class="form-control" id="full-name" name="fullName" type="text"  placeholder="Sturgis P. Sturgeon" autocomplete="name" focus-first>-->
+<!--            <div class="invalid-feedback">Please enter your full name.</div>-->
+<!--          </div>-->
+<!--          <div class="form-group">-->
+<!--            <label for="email-address">Email address</label>-->
+<!--            <input class="form-control" id="emaila-address" name="emailAddress" type="email"  placeholder="sturgeon@example.com" autocomplete="email">-->
+<!--            <div class="invalid-feedback">Please enter a valid email address.</div>-->
+<!--          </div>-->
+<!--          <div class="form-group">-->
+<!--            <label for="password">Choose a password</label>-->
+<!--            <input class="form-control" id="password" name="password" type="password"  placeholder="••••••••" autocomplete="new-password">-->
+<!--            <div class="invalid-feedback">Please enter a password.</div>-->
+<!--          </div>-->
+<!--          <div class="form-group">-->
+<!--            <label for="confirm-password">Confirm password</label>-->
+<!--            <input class="form-control" id="confirm-password" name="confirmPassword" type="password"  placeholder="••••••••" autocomplete="new-password">-->
+<!--            <div class="invalid-feedback">Your password and confirmation do not match.</div>-->
+<!--          </div>-->
+<!--          <span>It looks like there's already an account with your email address. If you forgot your password, you can recover it <a href="password/forgot">here</a>.</span>-->
+<!--          <div class="form-group">-->
+<!--            <button type="submit" class="btn-dark btn-lg btn-block">Create account</button>-->
+<!--          </div>-->
+<!--        </ajax>-->
+<!--        <p class="text-center">Have an account? <a href="/login">Sign in</a></p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<div id="app">
+    <div id="signup">
+        <div class="container-fluid pt-5 pb-5">
+            <h1 class="text-center">Registrieren</h1>
+            <div style="max-width: 450px;" class="mx-auto">
+                <text-field title="Spitzname" @update="fullName = $event"></text-field>
+                <text-field title="Email-Adresse" @update="emailAddress = $event"></text-field>
+                <pass-field title="Passwort" @update="password = $event"></pass-field>
+                <pass-field title="Passwort Wiederholen" @update="confirmPassword = $event"></pass-field>
+                <date-field title="Geburtstag" @update="birthday = $event"></date-field>
+                <div class="error-container" v-if="errorMessage !== ''">
+                    <span>{{errorMessage}}</span>
+                </div>
+
+                <button class="btn btn-lg btn-secondary" @click="register">Registrieren</button>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+
+<script type="module">
+
+  import TextField from "/vue/TextField.js";
+  import PasswordField from "/vue/PasswordField.js";
+  import DateField from "/vue/DateField.js";
+
+  const {createApp} = Vue
+
+  let app = createApp(
+    {
+      data() {
+        return {
+          fullName: "",
+          emailAddress: "",
+          password: "",
+          confirmPassword: "",
+          birthday: "",
+          errorMessage: ""
+        }
+      },
+      methods: {
+        register: function (event) {
+          console.log("Registering...")
+
+          if (
+            this.fullName === ""
+          ) {
+            this.errorMessage = "Der name darf nicht leer sein!"
+            return
+          }
+
+          if (
+            !this.emailAddress
+              .toLowerCase()
+              .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              )
+          ) {
+            this.errorMessage = "Keine gültige Email-Adresse"
+            return
+          }
+
+          if (
+            this.password.length < 8
+          ) {
+            this.errorMessage = "Das Password darf nicht weniger als 8 charakter enthalten"
+            return
+          }
+
+          if (
+            this.password !== this.confirmPassword
+          ) {
+            this.errorMessage = "Die Passwörter sind nicht identisch!"
+            return
+          }
+
+          let url = new URL(origin + "/signup")
+          let data = new FormData();
+          data.append("fullName", this.fullName)
+          data.append("emailAddress", this.emailAddress)
+          data.append("password", this.password)
+          data.append("birthday", this.birthday)
+          fetch(
+            url,
+            {
+              method: "POST",
+              body: data
+            }
+          ).then((result) => {
+            if (result.ok) {
+              // window.location.href = origin;
+            } else {
+              this.errorMessage = "Etwas ist schief gelaufen"
+            }
+          })
+        }
+      }
+    }
+  )
+  app.component("text-field", TextField);
+  app.component("pass-field", PasswordField)
+  app.component("date-field", DateField)
+  app.mount("#app");
+
+</script>

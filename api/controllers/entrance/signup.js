@@ -72,7 +72,7 @@ the account verification message.)`,
   },
 
 
-  fn: async function ({emailAddress, password, fullName}) {
+  fn: async function ({emailAddress, password, fullName, birthday}) {
 
     var newEmailAddress = emailAddress.toLowerCase();
 
@@ -82,7 +82,8 @@ the account verification message.)`,
       fullName,
       emailAddress: newEmailAddress,
       password: await sails.helpers.passwords.hashPassword(password),
-      tosAcceptedByIp: this.req.ip
+      tosAcceptedByIp: this.req.ip,
+      birthday: birthday
     }, sails.config.custom.verifyEmailAddresses? {
       emailProofToken: await sails.helpers.strings.random('url-friendly'),
       emailProofTokenExpiresAt: Date.now() + sails.config.custom.emailProofTokenTTL,
@@ -95,7 +96,7 @@ the account verification message.)`,
 
     // Store the user's new id in their session.
     this.req.session.userId = newUserRecord.id;
-  
+
     if (!this.req.wantsJSON) {
       throw {redirect: '/'};
     }

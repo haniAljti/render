@@ -28,40 +28,91 @@
   <%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %> -->
 
 <div id="app">
-  <div id="login">
-    <div class="container-fluid pt-5 pb-5">
-      <h1 class="text-center">Sign in to your account</h1>
-      <div style="max-width: 450px;" class="mx-auto">
-        <hr/>
-        <form action="login" method="POST">
-          <div class="form-group">
-            <input type="email" name="emailAddress" class="form-control" placeholder="Email address" autocomplete="email" focus-first>
-            <div class="invalid-feedback">Please provide a valid email address.</div>
-          </div>
-          <div class="form-group">
-            <input name="password" type="password" class="form-control" placeholder="Password" autocomplete="current-password">
-            <div class="invalid-feedback">Please enter your password.</div>
-          </div>
-          <div class="form-group form-check">
-            <input class="form-check-input" type="checkbox" id="remember" name="rememberMe" checked="checked" value="true"/>
-            <label class="form-check-label" for="remember">Remember me</label>
-          </div>
-          <span>The credentials you entered are not associated with an account. Please check your email and/or password and try again.</span>
-          <div class="form-group">
-            <button type="submit"class="btn-dark btn-lg btn-block">Sign in</button>
-          </div>
-        </form>
-        <p class="text-center"><a href="/password/forgot">Forgot your password?</a></p>
-      </div>
+    <div id="login">
+        <div class="container-fluid pt-5 pb-5">
+            <h1 class="text-center">Melde dich in deinem Konto an</h1>
+            <div style="max-width: 450px;" class="mx-auto">
+                <text-field title="Email-Adresse" @update="emailAddress = $event"></text-field>
+                <pass-field title="Passwort" @update="password = $event"></pass-field>
+                <check-box title="Remember Me" @update="rememberMe = $event"></check-box>
+                <div class="error-container" v-if="wrongCredentials">
+                    <span>{{errorMessage}}</span>
+                </div>
+
+                <button class="btn btn-lg btn-secondary" @click="login">einloggen</button>
+
+                <p class="text-center"><a href="/password/forgot">Hast du dein Passwort vergessen?</a></p>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script type="module">
 
-  const { createApp } = Vue
+  import TextField from "/vue/TextField.js";
+  import PasswordField from "/vue/PasswordField.js";
+  import CheckBox from "/vue/CheckBox.js";
 
-  createApp({}).mount("#app")
-  
+  const {createApp} = Vue
+
+  let app = createApp(
+    {
+      data() {
+        return {
+          emailAddress: "",
+          password: "",
+          rememberMe: false,
+          wrongCredentials: false,
+          errorMessage: ""
+        }
+      },
+      methods: {
+        login: function (event) {
+          console.log("logging in...")
+          if (
+            !this.emailAddress
+              .toLowerCase()
+              .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              )
+          ) {
+            this.errorMessage = "Keine gültige Email-Adresse"
+            this.wrongCredentials = true
+            return
+          }
+          if (
+            this.password.length < 8
+          ) {
+            this.errorMessage = "Das Password darf nicht weniger als 8 charakter enthalten"
+            this.wrongCredentials = true
+            return
+          }
+          let url = new URL(origin + "/login")
+          let data = new FormData();
+          data.append("emailAddress", this.emailAddress)
+          data.append("password", this.password)
+          data.append("rememberMe", this.rememberMe)
+          fetch(
+            url,
+            {
+              method: "POST",
+              body: data
+            }
+          ).then((result) => {
+            if (result.ok) {
+              window.location.href = origin;
+            } else {
+              this.errorMessage = "Das Password oder Email-Adresse ist falsch"
+              this.wrongCredentials = true
+            }
+          })
+        }
+      }
+    }
+  )
+  app.component("text-field", TextField);
+  app.component("pass-field", PasswordField)
+  app.component("check-box", CheckBox)
+  app.mount("#app");
+
 </script>
-  
