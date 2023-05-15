@@ -1,14 +1,13 @@
 
 $( document ).ready(() => {
 
-  $('.review-holder .review span').on('load', function(event){
-    let averageStars = $(this).parent().data('averageStars');
-
-    $('.review-holder .review span').each({
-      function() {
-        $(this).addClass('selected');  
-      }
-    });
+  let averageStars = $('.review-holder .review').data('averagestars');
+  let count = 0;
+  $('.review-holder .review span').each(function(){
+    if(count < averageStars){
+      $(this).toggleClass('selected');
+      count++;
+    }
   });
 
   $('.review-holder .review span').on('click', function(event){
@@ -36,7 +35,7 @@ $( document ).ready(() => {
       url: '/quiz/' + quiz_id + '/feedback/' + stars,
       type: 'POST',
       success: function(data){
-        alert(data);
+        location.reload();
       },
       error: function(data){
         alert('error! in conrollerino');
