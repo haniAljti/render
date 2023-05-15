@@ -44,7 +44,7 @@
                 <text-field title="Email-Adresse" @update="emailAddress = $event"></text-field>
                 <pass-field title="Passwort" @update="password = $event"></pass-field>
                 <pass-field title="Passwort Wiederholen" @update="confirmPassword = $event"></pass-field>
-                <date-field title="Geburtstag" @update="birthday = $event"></date-field>
+                <!-- <date-field title="Geburtstag" @update="birthday = $event"></date-field> -->
                 <div class="error-container" v-if="errorMessage !== ''">
                     <span>{{errorMessage}}</span>
                 </div>
@@ -71,7 +71,7 @@
           emailAddress: "",
           password: "",
           confirmPassword: "",
-          birthday: "",
+          // birthday: "",
           errorMessage: ""
         }
       },
@@ -116,7 +116,7 @@
           data.append("fullName", this.fullName)
           data.append("emailAddress", this.emailAddress)
           data.append("password", this.password)
-          data.append("birthday", this.birthday)
+          // data.append("birthday", this.birthday)
           fetch(
             url,
             {

@@ -74,6 +74,8 @@ the account verification message.)`,
 
   fn: async function ({emailAddress, password, fullName, birthday}) {
 
+    sails.log.debug(birthday);
+    
     var newEmailAddress = emailAddress.toLowerCase();
 
     // Build up data for the new user record and save it to the database.

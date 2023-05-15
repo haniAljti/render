@@ -16,7 +16,7 @@ module.exports = {
       if (req.query.filter === 'all') {
         users = await User.find({
           //or : [{
-          name: {
+          fullName: {
             'contains': req.query.q
           }
           //}]
@@ -28,9 +28,9 @@ module.exports = {
             'contains': req.query.q
           }
         });
-      } else if (req.query.filter === 'name') {
+      } else if (req.query.filter === 'fullName') {
         users = await User.find({
-          name: {
+          fullName: {
             'contains': req.query.q
           }
         });
