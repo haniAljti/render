@@ -13,9 +13,9 @@
     </div>
 
     <div class="players">
-        <% game.participants.forEach(function(participant){ %>
+        <% participants.forEach(function(participant){ %>
             <div class="">
-                <%= participant.id %>
+                <%= participant.user.fullName %>
             </div>
 
         <% }); %>

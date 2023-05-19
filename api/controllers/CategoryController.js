@@ -5,6 +5,7 @@ const Sails = require("sails/lib/app/Sails");
 module.exports = {
   create: async function (req, res) {
     sails.log.debug("Create new Categpry....")
+    StartedQuiz.create({}).fetch()
     let category = await Category.create(req.allParams());
     res.redirect('/category');
   },

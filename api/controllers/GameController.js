@@ -1,49 +1,58 @@
 const Sails = require('sails/lib/app/Sails');
-var uuid = require('node-uuid');
 
 /* eslint-disable indent */
 
 module.exports = {
 
-  create: async function (req,res) {
+  create: async function (req, res) {
     var socket = req.socket;
     var io = sails.io;
 
     var id = new Date().getTime();
 
     var startedQuizData = {
-        sessionId: id,
-        quiz: req.params.id,
-        participants: req.me.id
+      sessionId: id,
+      quiz: req.params.id,
     };
+
+    await Participant.create(
+      {
+        sessionId: id,
+        user: req.me.id
+      }
+    )
 
     let startedQuiz = await StartedQuiz.create(startedQuizData).fetch();
 
-    //socket.join(id);
+    await sails.sockets.join(socket, id);
 
-    res.view('pages/game/view', { game: startedQuiz  });
+    res.redirect('/quiz/game/' + req.params.id);;
   },
 
-    show: async function (req,res) {
-        let startedQuiz = await StartedQuiz.findOne({ id: req.params.sessionid }).populate("participants");
-        
-        res.view('pages/game/view', { game: startedQuiz  });
-    },
+  show: async function (req, res) {
+    sails.log.debug(req.params.sessionid)
+    let startedQuiz = await StartedQuiz.findOne({ sessionId: req.params.sessionid });
+    sails.log.debug(startedQuiz)
+    let quiz = await Quiz.findOne({ id: startedQuiz.quiz })
+    let participants = await Participant.find({ sessionId: req.params.sessionid }).populate("user");
+ 
+    res.view('pages/game/view', { quiz: quiz, participants: participants });
+  },
 
-    /*
-    join: async function (req,res) {
+  /*
+  join: async function (req,res) {
 
-    },
+  },
 
-    leave: async function (req,res) {
+  leave: async function (req,res) {
 
-    },
+  },
 
-    start: async function (req,res) {
+  start: async function (req,res) {
 
-    },
+  },
 
-    finish: async function (req,res) {
+  finish: async function (req,res) {
 
-    }*/
+  }*/
 };
