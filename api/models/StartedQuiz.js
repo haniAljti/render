@@ -8,8 +8,8 @@ module.exports = {
             model: 'quiz'
         },
         participants: {
-            model: 'user',
-            via: 'id',
+            collection: 'user',
+            via: 'startedQuizId',
         }
     }
 }

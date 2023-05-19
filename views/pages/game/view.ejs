@@ -1,0 +1,25 @@
+
+
+<div>
+    Juchei!
+
+    <div>
+        <form action="/quiz/start" method="post">
+            <button class="btn btn-secondary secondary-button">RUUUUN</button>
+        </form>
+        <form action="/quiz/" method="post">
+            <button class="btn btn-secondary secondary-button">RUUUUN</button>
+        </form>
+    </div>
+
+    <div class="players">
+        <% game.participants.forEach(function(participant){ %>
+            <div class="">
+                <%= participant.id %>
+            </div>
+
+        <% }); %>
+    </div>
+
+
+</div>

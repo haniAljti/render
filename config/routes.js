@@ -66,6 +66,12 @@ module.exports.routes = {
   //Feedback
   'POST /quiz/:id/feedback/:stars': { controller: 'FeedbackController', action: 'create' },
 
+
+  //StartedQuiz
+  'POST /quiz/:id/create': { controller: 'GameController', action: 'create' },
+  'GET /quiz/game/:sessionid': { controller: 'GameController', action: 'show' },
+
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
