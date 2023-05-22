@@ -1,0 +1,107 @@
+<div id="app">
+
+    <div>
+        Juchei!
+
+        <p>Game Status: {{ status }}</p>
+        <div>
+            <form action="/quiz/start" method="post">
+                <button class="btn btn-secondary secondary-button">RUUUUN</button>
+            </form>
+            <form action="/quiz/" method="post">
+                <button class="btn btn-secondary secondary-button">RUUUUN</button>
+            </form>
+        </div>
+
+        <li v-for="participant in participants">
+            {{ participant.fullName }}
+        </li>
+
+    </div>
+    <router-view></router-view>
+</div>
+
+<script type="module">
+
+    const { createApp } = Vue
+    const { createRouter, createWebHashHistory } = VueRouter
+    import Menu from "/vue/PasswordField.js";
+    // import Basket from "/vue/basket.js";
+    // import Address from "/vue/address.js";
+    // import Checkout from "/vue/checkout.js";
+    // import Confirmation from "/vue/confirmation.js";
+
+
+    const routes = [
+        { path: '/:quizId', component: {} },
+        { path: '/', component: {} }
+        // { path: '/basket', component: Basket },
+        // { path: '/address', component: Address },
+        // { path: '/checkout', component: Checkout },
+        // { path: '/confirmation', component: Confirmation },
+    ]
+
+    const router = createRouter({
+        history: createWebHashHistory(),
+        routes,
+    })
+
+    // 5. Create and mount the root instance.
+    const app = createApp(
+        {
+            data() {
+                return {
+                    participants: [],
+                    status: 'idle',
+                    sessionid: ''
+                }
+            },
+            mounted() {
+
+                var ref = this
+
+                io.socket.on('connect', function onConnect() {
+                    console.log('This socket is now connected to the Sails server.');
+                });
+
+                var quizid = location.pathname.split('/')[3]
+
+                // Subscribe to game events
+                io.socket.on(
+                    'joined',
+                    function (participant) {
+                        console.log(`A player has joined: ` + participant.fullName)
+                        ref.participants.push(participant)
+                    }
+                )
+
+                io.socket.on(
+                    'left',
+                    function (participant) {
+                        console.log('A player has left: ' + participant.fullName)
+                        ref.participants.push(participant)
+                    }
+                )
+
+                io.socket.on(
+                    'state',
+                    function (state) {
+                        console.log(`Game status has changed: ` + state.status)
+                        ref.status = state.status
+                    }
+                )
+
+                io.socket.post(
+                    '/quiz/' + quizid + '/create',
+                    function (resData, jwRes) {
+                        console.log(`Starting game...`)
+                        var sessionid = resData.sessionid
+                        io.socket.post('/game/' + sessionid + '/start') //Start game
+                    }
+                )
+            }
+        }
+    );
+    app.use(router);
+    app.mount('#app')
+</script>

@@ -63,18 +63,20 @@ var jsFilesToInject = [
 
   // Load `sails.io` before everything else.
   'dependencies/sails.io.js',
+  'dependencies/vue.global.js',
+  'dependencies/vue-router.global.js',
 
-  // Bring in `.js` files for any other client-side JavaScript dependencies.
-  // (e.g. Lodash, Vue.js, jQuery, Bootstrap, Ember, Angular, etc.)
-  // > Be sure to list dependencies that depend on each other in the right order!
-  'dependencies/**/*.js',
-
+  
   // All of the rest of your custom client-side js files will be injected here,
   // in no particular order.  To customize the ordering, add additional items
   // here, _above_ this one.
   'js/**/*.js',
   'dependencies/bootstrap/dist/js/bootstrap.js',
+  // Bring in `.js` files for any other client-side JavaScript dependencies.
+  // (e.g. Lodash, Vue.js, jQuery, Bootstrap, Ember, Angular, etc.)
+  // > Be sure to list dependencies that depend on each other in the right order!
   'dependencies/**/*.js',
+
   // Do the same for the js files
   'vendor/**/*.js',
   'linker/js/jquery.js',

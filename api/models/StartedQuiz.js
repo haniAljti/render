@@ -10,6 +10,9 @@ module.exports = {
         participants: {
             collection: 'user',
             via: 'startedQuizId',
+        },
+        startedBy: {
+            model: 'user'
         }
     }
 }

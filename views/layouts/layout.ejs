@@ -58,12 +58,13 @@
 
   <!--SCRIPTS-->
   <script src="/dependencies/sails.io.js"></script>
-  <script src="/dependencies/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="/dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="/dependencies/vue.global.js"></script>
+  <script src="/dependencies/vue-router.global.js"></script>
   <script src="/js/feedback.js"></script>
   <script src="/js/quiz/new.js"></script>
   <script src="/js/search.js"></script>
+  <script src="/dependencies/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="/dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
   <!--SCRIPTS END-->
 
   <!-- header -->
@@ -93,6 +94,12 @@
               <% if(req.me.isSuperAdmin) { %>
                 <li class="nav-item"> <a href="/User">User - ADMIN</a> </li>
                 <% } %>
+                <!-- <li class="nav-item">
+                  <div class="field">
+                    <input type="text" id="lname" name="lname">
+                  </div>
+                  <button class="btn btn-primary">Quiz starten</button>
+                </li> -->
                   <li class="nav-item"> <a href="/category">Kategorie</a> </li>
                   <li class="nav-item"> <a href="/quiz/index">Quiz</a> </li>
                   <li class="nav-item"> <a href="#">Services</a> </li>
