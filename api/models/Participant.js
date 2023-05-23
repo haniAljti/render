@@ -5,6 +5,7 @@ module.exports = {
         },
         user: {
             model: 'user'
-        }
+        },
+        score: { type: 'number', defaultsTo: 0 } 
     }
 }

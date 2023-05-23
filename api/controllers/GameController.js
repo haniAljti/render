@@ -18,7 +18,7 @@ module.exports = {
     var socket = req.socket;
 
     var time = new Date().getTime() + "";
-    var sessionid = time.slice(-6);
+    var sessionid = Math.floor(100000 + Math.random() * 900000); // generates random 6 digits number
 
     var startedQuiz = await StartedQuiz.findOne({ startedBy: me })
 
@@ -27,7 +27,7 @@ module.exports = {
       await Participant.create(
         {
           sessionId: sessionid,
-          user: req.me.id
+          user: me
         }
       );
 
@@ -38,6 +38,20 @@ module.exports = {
           startedBy: me
         }
       );
+
+      let user = User.findOne({ id: me });
+
+      await sails.sockets.broadcast(sessionid, 'state', { status: 'created', isCreator: true })
+      if (!user) {
+        await sails.sockets.broadcast(
+          sessionid,
+          'joined',
+          {
+            name: user.fullName,
+            emailAddress: user.emailAddress
+          }
+        )
+      }
 
     } else {
       if (startedQuiz.quiz === quizid) {
@@ -77,27 +91,50 @@ module.exports = {
   },
 
   start: async function (req, res) {
-    await sails.sockets.broadcast(req.params.sessionid, 'state', { status: 'started' });
 
-    let user = await User.findOne({ id: 1 });
+    var sessionid = req.params.sessionid
+    var time = 60000;
 
-    setInterval(
-      function () {
+    await sails.sockets.broadcast(sessionid, 'state', { status: 'started' });
+
+    var startedQuiz = await StartedQuiz.findOne({ sessionId: sessionid })
+    var questions = await Question.find({ quiz: startedQuiz.quiz }).populate('answers');
+    var questionIndex = 0;
+
+    var interval = null
+
+    var broadcastQuestion = async function () {
+      if (questionIndex >= questions.length) {
+        clearInterval(interval)
+
+        var participants = await Participant
+          .find({ sessionId: sessionid })
+          .populate('user');
+
         sails.sockets.broadcast(
-          req.params.sessionid, 
-          'joined',
-          {
-            name: user.fullName,
-            emailAddress: user.emailAddress
-          }
-          );
-      },
-      5000
-    );
+          sessionid,
+          'scores',
+          participants.map(participant => {
+            return {
+              participant: participant.user.fullName,
+              score: participant.score
+            }
+          })
+        );
+        questionIndex++
 
-    setTimeout(function () {
-      sails.sockets.broadcast(req.params.sessionid, 'state', { status: 'ended' });
-    }, 3000);
+      } else {
+        sails.sockets.broadcast(
+          sessionid,
+          'nextQuestion',
+          { time: time, question: questions[questionIndex] }
+        );
+        questionIndex++
+      }
+    }
+
+    interval = setInterval(broadcastQuestion, 1000);
+
   },
 
   join: async function (req, res) {
@@ -139,14 +176,60 @@ module.exports = {
     await sails.sockets.broadcast(sessionid, 'joined', { user: user });
   },
 
-  /*
-  
+  leave: async function (req, res) {
 
-  leave: async function (req,res) {
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
+
+    var user = User.findOne({ id: req.me.id })
+
+    await sails.sockets.broadcast(
+      sessionid,
+      'left',
+      {
+        name: user.fullName,
+        emailAddress: user.emailAddress
+      }
+    );
+    await sails.sockets.leave(req.socket, participant.sessionId);
+    await Participant.destroy({ user: req.me.id });
 
   },
 
-  finish: async function (req,res) {
+  finish: async function (req, res) {
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
 
-  }*/
+    var me = req.me.id
+    var sessionid = req.params.sessionid
+
+    await sails.sockets.broadcast(sessionid, 'state', { status: 'ended', startedBy: me })
+    await sails.sockets.leaveAll(sessionid);
+
+    await StartedQuiz.destroyOne({ sessionid: sessionid });
+    await Participant.destroy({ sessionid: sessionid })
+  },
+
+  answer: async function (req, res) {
+
+    var answerId = req.params.answerId
+    var questionId = req.params.questId
+    var me = req.me.id
+
+    var answer = await Answer.findOne({ id: answerId });
+
+    if (answer.isCorrect) {
+
+      var participant = await Participant.findOne({ user: me });
+
+      await Participant.updateOne({ user: me })
+        .set(
+          { score: participant.score + 1 }
+        )
+
+    }
+
+  }
 };

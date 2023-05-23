@@ -1,44 +1,22 @@
 <div id="app">
-
-    <div>
-        Juchei!
-
-        <p>Game Status: {{ status }}</p>
-        <div>
-            <form action="/quiz/start" method="post">
-                <button class="btn btn-secondary secondary-button">RUUUUN</button>
-            </form>
-            <form action="/quiz/" method="post">
-                <button class="btn btn-secondary secondary-button">RUUUUN</button>
-            </form>
-        </div>
-
-        <li v-for="participant in participants">
-            {{ participant.fullName }}
-        </li>
-
-    </div>
-    <router-view></router-view>
+    <a class="btn btn-danger" href="">Quiz beenden</a>
+    <button class="btn btn-primary" @click="start">Quiz started</button>
+    <router-view :status="status" :participants="participants" :startedBy="startedBy" :question="currentQuestion">
+    </router-view>
 </div>
 
 <script type="module">
 
     const { createApp } = Vue
     const { createRouter, createWebHashHistory } = VueRouter
-    import Menu from "/vue/PasswordField.js";
-    // import Basket from "/vue/basket.js";
-    // import Address from "/vue/address.js";
-    // import Checkout from "/vue/checkout.js";
-    // import Confirmation from "/vue/confirmation.js";
+
+    import Lobby from "/vue/game/Lobby.js";
+    import QuestionView from "/vue/game/QuestionView.js";
 
 
     const routes = [
-        { path: '/:quizId', component: {} },
-        { path: '/', component: {} }
-        // { path: '/basket', component: Basket },
-        // { path: '/address', component: Address },
-        // { path: '/checkout', component: Checkout },
-        // { path: '/confirmation', component: Confirmation },
+        { path: '/', component: Lobby },
+        { path: '/question', name: "question", component: QuestionView, props: true }
     ]
 
     const router = createRouter({
@@ -53,7 +31,10 @@
                 return {
                     participants: [],
                     status: 'idle',
-                    sessionid: ''
+                    isCreator: false,
+                    sessionid: '',
+                    sessionCreated: false,
+                    currentQuestion: null
                 }
             },
             mounted() {
@@ -76,6 +57,15 @@
                 )
 
                 io.socket.on(
+                    'nextQuestion',
+                    function (question) {
+                        ref.currentQuestion = question.question
+                        ref.$router.push({ name: 'question' })
+                        console.log(question)
+                    }
+                )
+
+                io.socket.on(
                     'left',
                     function (participant) {
                         console.log('A player has left: ' + participant.fullName)
@@ -88,17 +78,29 @@
                     function (state) {
                         console.log(`Game status has changed: ` + state.status)
                         ref.status = state.status
+                        if (!state.startedBy) {
+                            ref.startedBy = state.startedBy
+                        }
                     }
                 )
 
                 io.socket.post(
                     '/quiz/' + quizid + '/create',
                     function (resData, jwRes) {
-                        console.log(`Starting game...`)
-                        var sessionid = resData.sessionid
-                        io.socket.post('/game/' + sessionid + '/start') //Start game
+                        console.log(resData)
+                        ref.sessionCreated = true
+                        ref.sessionid = resData.sessionid + ""
                     }
                 )
+            },
+            methods: {
+                start: function () {
+                    console.log(`Starting game...`)
+                    io.socket.post('/game/' + this.sessionid + '/start')
+                },
+                stop: function () {
+                    console.log("Ending game...")
+                }
             }
         }
     );
