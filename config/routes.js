@@ -8,6 +8,8 @@
  * https://sailsjs.com/anatomy/config/routes-js
  */
 
+const GameController = require("../api/controllers/GameController");
+
 module.exports.routes = {
 
   /***************************************************************************
@@ -70,10 +72,13 @@ module.exports.routes = {
   //StartedQuiz
   'GET /game/start/:quizid': { view: 'pages/game/start'},
   'GET /game/join/:sessionid': { view: 'pages/game/join'},
-  'POST /quiz/:id/create': { controller: 'GameController', action: 'create' },
-  'POST /game/:sessionid/start': { controller: 'GameController', action: 'start' },
-  'GET /quiz/game/:sessionid': { controller: 'GameController', action: 'show' },
-
+  'POST /quiz/:id/create': GameController.create,
+  'POST /game/:sessionid/start': GameController.start,
+  'POST /game/:sessionid/answer/:answerid': GameController.answer,
+  'POST /game/:sessionid/next': GameController.next,
+  'POST /game/:sessionid/finish': GameController.finish,
+  'POST /game/:sessionid/join': GameController.join,
+  'POST /game/:sessionid/leave': GameController.leave
 
   /***************************************************************************
   *                                                                          *

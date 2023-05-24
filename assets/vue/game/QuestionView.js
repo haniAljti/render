@@ -1,15 +1,15 @@
 export default {
-    data () {
+    data: function() {
         return {
-            countDown: 30,
-            answered: false
+            answered: false,
+            countDown: this.timer,
         }
     },
-    created () {
+    created() {
         this.countDownTimer()
     },
     methods: {
-        countDownTimer () {
+        countDownTimer() {
             if (this.countDown > 0) {
                 setTimeout(() => {
                     this.countDown -= 1
@@ -17,16 +17,15 @@ export default {
                 }, 1000)
             }
         },
-        answer (answerId) {
+        postAnswer(answerId) {
+            let ref = this
+            ref.answered = true
             io.socket.post(
-                "/answer/" + answerId,
-                function () {
-                    
-                }
+                "/game/" + this.sessionid + "/answer/" + answerId,
             )
         }
     },
-    props: ['question'],
+    props: ['question', 'timer', 'sessionid'],
     template: `
     <div>
         <h1>Counter: {{ countDown }}</h1>
@@ -34,13 +33,17 @@ export default {
 
         <p>{{ question.question }}</p>
 
+        <h2 v-if="answered">Danke, die Scores werden angezeigt, sobald den Counter abläuft!</h2>
         <ul 
-        v-for="answer in question.answers"
-        :key="answer.id"
+            v-for="answer in question.answers"
+            :key="answer.id"
+            v-else
         >
-        <a @click="answer">
-        <li> {{ answer.text }} </li>
-        </a>
+            <li>
+                <a @click="postAnswer(answer.id)" class="answer-container">
+                    {{ answer.text }}
+                </a>
+            </li>
         </ul>
     </div>
     `

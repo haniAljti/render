@@ -13,6 +13,10 @@ module.exports = {
         },
         startedBy: {
             model: 'user'
+        },
+        currentQuestion: {
+            type: 'number',
+            defaultsTo: 0
         }
     }
 }

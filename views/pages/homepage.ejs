@@ -8,93 +8,109 @@ For more information, see:
 
 
 <div class="default-page">
-    <section class="main quizzz-container">
-      <div class="row d-flex">
-        <div class="col-sm-12 col-md-6 text-content d-flex">
-          <h2>So funktioniert's</h2>
-          <p>
-            Unsere Quiz-Webapplikation bietet die Möglichkeit, eigene Quizze zu erstellen, 
-            an Quizzen teilzunehmen und Quizze zu starten. Du kannst entweder eigene Fragen zu 
-            einem Thema hinzufügen oder durch verfügbare Quizkategorien suchen und dich für 
-            ein Quiz anmelden. Nachdem alle Teilnehmer registriert sind, beginnt das Spiel mit einer begrenzten Zeit, 
-            um die Fragen zu beantworten. Die Punktzahl wird nach jedem Frageblock angezeigt, 
-            bis alle Fragen beantwortet sind.        
-          </p>
-          <button class="btn-secondary secondary-button ml-0" style="float: left;">
-            Jetzt Teil unserer Quiz-Community werden!
-          </button>
-        </div>
-        
-        <div class="col-sm-12 col-md-6 text-content">
-          <form class="">
-            <div class="info-text">
-              <span>Hast du schon eine PIN?</span>
-              <span>Gib die hier ein!</span>
-            </div>
-            <div class="field">
-              <input type="text" id="lname" name="lname">
-            </div>
-            <button class="btn btn-secondary secondary-button">Quiz starten</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section class="row">
-      <div class="col-sm-12 col-md-6">
-        <div class="quizzz-container chart">
-          <h2>Dein Fortschritt</h2>
-          <img src="/images/progress.png">
-          <h3>Dieser Monat lief super!</h3>
-        </div>
+  <section class="main quizzz-container">
+    <div class="row d-flex">
+      <div class="col-sm-12 col-md-6 text-content d-flex">
+        <h2>So funktioniert's</h2>
+        <p>
+          Unsere Quiz-Webapplikation bietet die Möglichkeit, eigene Quizze zu erstellen,
+          an Quizzen teilzunehmen und Quizze zu starten. Du kannst entweder eigene Fragen zu
+          einem Thema hinzufügen oder durch verfügbare Quizkategorien suchen und dich für
+          ein Quiz anmelden. Nachdem alle Teilnehmer registriert sind, beginnt das Spiel mit einer begrenzten Zeit,
+          um die Fragen zu beantworten. Die Punktzahl wird nach jedem Frageblock angezeigt,
+          bis alle Fragen beantwortet sind.
+        </p>
+        <button class="btn-secondary secondary-button ml-0" style="float: left;">
+          Jetzt Teil unserer Quiz-Community werden!
+        </button>
       </div>
 
       <div class="col-sm-12 col-md-6 text-content">
-        <h2>Verfolge deinen Fortschritt</h2>
-        <p>
-          Unsere Quiz-Webapplikation verfolgt den Fortschritt der Benutzer mit Punkten und Auszeichnungen.
-          Benutzer können ihre Ergebnisse teilen und sich gegenseitig herausfordern, 
-          um ihre Fähigkeiten zu verbessern und ihre Punktzahlen zu erhöhen. 
-          Es ist eine unterhaltsame und interaktive Möglichkeit, den Fortschritt im Quizzen zu verfolgen und zu verbessern.
-        </p>
-      </div>
-    </section>
 
-    <section class="row d-flex">
-
-      <div class="col-sm-12 col-md-6 order-sm-2 order-md-1 text-content">
-        <h2>Spiel allein oder mit Freunden: Entdecke jetzt unsere Quizze!</h2>
-        <p>
-          Selbst wenn du gerade keine Mitspieler hast, kannst du unsere Quizzz trotzdem genießen! Unsere Quizze sind so gestaltet, dass du auch alleine spielen kannst. Du kannst ein Quiz deiner Wahl auswählen und sofort mit dem Spielen beginnen. Es ist eine großartige Möglichkeit, Dein Wissen zu testen und deine Fähigkeiten zu verbessern, selbst wenn du keine Mitspieler zur Hand hast.
-        </p>
-      </div>
-
-      <div class="col-sm-12 col-md-6 order-md-1 order-sm-2">
-        <div class="illustration">
-          <img src="/images/learning_alone.svg">
+        <div class="info-text">
+          <span>Hast du schon eine PIN?</span>
+          <span>Gib die hier ein!</span>
         </div>
-      </div>
-
-    </section>
-
-    <section class="row">
-
-      <div class="col-sm-12 col-md-6 justify-content-center">
-        <div class="illustration">
-          <img src="/images/learning_together.svg">
+        <div class="field">
+          <input type="text" id="input-session" name="lname">
         </div>
+        <button id="go-to-session" class="btn btn-secondary secondary-button">Quiz Joinen</button>
+
       </div>
+    </div>
+  </section>
 
-      <div class="col-sm-12 col-md-6 text-content">
-        <h2>Spielt gemeinsam unsere interaktiven Quizze!</h2>
-        <p>
-          Unsere Quiz-Webapplikation ermöglicht es dir, Quizze mit mehreren Personen zu spielen. Du kannst Freunde einladen, gegen sie antreten und sehen, wer die meisten Punkte sammeln kann. Die Quiz-Webapplikation ist so gestaltet, dass sie eine unterhaltsame und interaktive Erfahrung für alle Beteiligten bietet.        </p>
+  <section class="row">
+    <div class="col-sm-12 col-md-6">
+      <div class="quizzz-container chart">
+        <h2>Dein Fortschritt</h2>
+        <img src="/images/progress.png">
+        <h3>Dieser Monat lief super!</h3>
       </div>
+    </div>
 
-    </section>
+    <div class="col-sm-12 col-md-6 text-content">
+      <h2>Verfolge deinen Fortschritt</h2>
+      <p>
+        Unsere Quiz-Webapplikation verfolgt den Fortschritt der Benutzer mit Punkten und Auszeichnungen.
+        Benutzer können ihre Ergebnisse teilen und sich gegenseitig herausfordern,
+        um ihre Fähigkeiten zu verbessern und ihre Punktzahlen zu erhöhen.
+        Es ist eine unterhaltsame und interaktive Möglichkeit, den Fortschritt im Quizzen zu verfolgen und zu
+        verbessern.
+      </p>
+    </div>
+  </section>
+
+  <section class="row d-flex">
+
+    <div class="col-sm-12 col-md-6 order-sm-2 order-md-1 text-content">
+      <h2>Spiel allein oder mit Freunden: Entdecke jetzt unsere Quizze!</h2>
+      <p>
+        Selbst wenn du gerade keine Mitspieler hast, kannst du unsere Quizzz trotzdem genießen! Unsere Quizze sind so
+        gestaltet, dass du auch alleine spielen kannst. Du kannst ein Quiz deiner Wahl auswählen und sofort mit dem
+        Spielen beginnen. Es ist eine großartige Möglichkeit, Dein Wissen zu testen und deine Fähigkeiten zu verbessern,
+        selbst wenn du keine Mitspieler zur Hand hast.
+      </p>
+    </div>
+
+    <div class="col-sm-12 col-md-6 order-md-1 order-sm-2">
+      <div class="illustration">
+        <img src="/images/learning_alone.svg">
+      </div>
+    </div>
+
+  </section>
+
+  <section class="row">
+
+    <div class="col-sm-12 col-md-6 justify-content-center">
+      <div class="illustration">
+        <img src="/images/learning_together.svg">
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-6 text-content">
+      <h2>Spielt gemeinsam unsere interaktiven Quizze!</h2>
+      <p>
+        Unsere Quiz-Webapplikation ermöglicht es dir, Quizze mit mehreren Personen zu spielen. Du kannst Freunde
+        einladen, gegen sie antreten und sehen, wer die meisten Punkte sammeln kann. Die Quiz-Webapplikation ist so
+        gestaltet, dass sie eine unterhaltsame und interaktive Erfahrung für alle Beteiligten bietet. </p>
+    </div>
+
+  </section>
 
 
 </div>
 
 </div>
 </div>
+
+<script>
+  document.getElementById("go-to-session").addEventListener(
+    "click",
+    function () {
+      var sessionid = document.getElementById("input-session").value;
+      window.location.href = "/game/join/" + sessionid
+    }
+  );
+</script>

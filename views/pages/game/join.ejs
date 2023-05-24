@@ -1,5 +1,6 @@
 <div id="app">
-    <h1>Session id: <h1 style="color: red;">{{ sessionid }}</h1></h1>
+    <h1>Session id: <h1 style="color: red;">{{ sessionid }}</h1>
+    </h1>
     <div v-if="isOwner" class="d-flex flex-row justify-content-center align-items-space-evenly">
         <a class="btn btn-danger btn-lg" href="">Quiz beenden</a>
         <button v-if="status !== 'ended' && sessionid !== ''" class="btn btn-secondary btn-lg"
@@ -7,6 +8,12 @@
         <button v-else-if="status === 'ended'" class="btn btn-secondary btn-lg" @click="nextQuestion">Quiz erneut
             started</button>
     </div>
+    <div v-else>
+        <a class="btn btn-danger btn-lg" href="">Quiz verlassen</a>
+        <h2 v-if="answered">Das Spiel fängt gleich an!</h2>
+    </div>
+
+
     <question v-if="currentQuestion !== null" :sessionid="sessionid" :question="currentQuestion" :timer="timer">
     </question>
 
@@ -38,7 +45,7 @@
             mounted() {
 
                 var ref = this
-                var quizid = location.pathname.split('/')[3]
+                ref.sessionid = location.pathname.split('/')[3]
 
                 // Subscribe to game events
                 io.socket.on(
@@ -61,24 +68,20 @@
                 io.socket.on(
                     'state',
                     function (state) {
-                        console.log(`Game status has changed: ` + state.status)
+                        console.log(`Game status has changed: ` + state.owner)
                         ref.status = state.status
-                        if (!state.startedBy) {
-                            ref.startedBy = state.startedBy
-
-                        }
+                        if (state.owner)
+                        ref.isOwner = true
+                        else ref.isOwner = false
                     }
                 )
 
                 // Create session
                 io.socket.post(
-                    '/quiz/' + quizid + '/create',
+                    '/game/' + this.sessionid + '/join',
                     function (resData, jwRes) {
                         console.log(resData)
-                        ref.sessionCreated = true
-                        ref.sessionid = resData.sessionid + ""
-                        ref.status = "created"
-                        ref.isOwner = true
+
                     }
                 )
             },
@@ -89,6 +92,22 @@
                 },
                 stop: function () {
                     console.log("Ending game...")
+                    io.socket.post(
+                        '/game/' + this.sessionid + '/finish',
+                        function () {
+                            this.goBack()
+                        });
+                },
+                leave: function () {
+                    console.log("Ending game...")
+                    io.socket.post(
+                        '/game/' + this.sessionid + '/leave',
+                        function () {
+                            this.goBack()
+                        });
+                },
+                goBack: function () {
+                    window.location.href = origin;
                 }
             }
         }
