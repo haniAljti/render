@@ -3,10 +3,13 @@
     </h1>
     <div v-if="isOwner" class="d-flex flex-row justify-content-center align-items-space-evenly">
         <a class="btn btn-danger btn-lg" href="">Quiz beenden</a>
-        <button v-if="status !== 'ended' && sessionid !== ''" class="btn btn-secondary btn-lg"
-            @click="nextQuestion">Nächste Frage</button>
-        <button v-else-if="status === 'ended'" class="btn btn-secondary btn-lg" @click="nextQuestion">Quiz erneut
-            started</button>
+        <div v-if="isNextEnabled">
+
+            <button v-if="status !== 'ended' && sessionid !== ''" class="btn btn-secondary btn-lg"
+                @click="nextQuestion">Nächste Frage</button>
+            <button v-else-if="status === 'ended'" class="btn btn-secondary btn-lg" @click="nextQuestion">Quiz erneut
+                started</button>
+        </div>
     </div>
     <div v-else>
         <a class="btn btn-danger btn-lg" href="">Quiz verlassen</a>
@@ -39,7 +42,8 @@
                     isOwner: false,
                     sessionid: '',
                     currentQuestion: null,
-                    timer: 0
+                    timer: 0,
+                    isNextEnabled: true
                 }
             },
             mounted() {
@@ -53,6 +57,7 @@
                     function (question) {
                         ref.currentQuestion = question.question
                         ref.timer = question.time / 1000
+                        ref.isNextEnabled = false
                         console.log(question)
                     }
                 )
@@ -62,6 +67,7 @@
                     function (participants) {
                         ref.participants = participants
                         ref.currentQuestion = null
+                        ref.isNextEnabled = true
                     }
                 )
 
@@ -70,9 +76,9 @@
                     function (state) {
                         console.log(`Game status has changed: ` + state.owner)
                         ref.status = state.status
-                        if (state.owner)
-                        ref.isOwner = true
-                        else ref.isOwner = false
+                        // if (state.owner)
+                        // ref.isOwner = true
+                        // else ref.isOwner = false
                     }
                 )
 
@@ -81,14 +87,15 @@
                     '/game/' + this.sessionid + '/join',
                     function (resData, jwRes) {
                         console.log(resData)
-
+                        ref.isOwner = resData.isOwner
                     }
                 )
             },
             methods: {
                 nextQuestion: function () {
                     console.log(`Requisting next question...`)
-                    io.socket.post('/game/' + this.sessionid + '/next')
+                    io.socket.post('/game/' + this.sessionid + '/next');
+
                 },
                 stop: function () {
                     console.log("Ending game...")
