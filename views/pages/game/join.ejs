@@ -1,6 +1,7 @@
 <div class="default-page" id="app">
-    <h1>Quiz ID: <h1 style="color: red;">{{ sessionid }}</h1>
-    </h1>
+    <div class="game-id">
+        Quiz ID: {{ sessionid }}
+    </div>
     <div v-if="isOwner" class="d-flex flex-row justify-content-between align-items-space-evenly">
         <a class="btn btn-danger btn-lg" href="">Quiz beenden</a>
         <div v-if="isNextEnabled">

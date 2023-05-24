@@ -4,7 +4,7 @@ export default {
     <div>
 
         <p>Game Status: {{ status }}</p>
-        <table class="table table-hover table-dark leaderboard">
+        <table v-if="participants" class="table table-hover table-dark leaderboard">
             <thead>
                 <tr>
                     <th>Name</th>
