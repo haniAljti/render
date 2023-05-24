@@ -4,12 +4,20 @@ export default {
     <div>
 
         <p>Game Status: {{ status }}</p>
-
-        <li v-for="participant in participants" class="quiz_container">
-        <p>
-        {{ participant.participant }} Score: {{ participant.score }}
-        </p>
-        </li>
+        <table class="table table-hover table-dark leaderboard">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="participant in participants">
+                    <td>{{ participant.participant }}</td>
+                    <td>{{ participant.score }}</td>
+                </tr>
+            </tbody>
+        </table>
 
     </div>
     `

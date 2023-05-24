@@ -27,24 +27,23 @@ export default {
     },
     props: ['question', 'timer', 'sessionid'],
     template: `
-    <div>
-        <h1>Counter: {{ countDown }}</h1>
+    <div class="answers-container">
+        <div class="timer">Counter: {{ countDown }}</div>
+
         <h1>{{ question.title }}</h1>
 
         <p>{{ question.question }}</p>
 
         <h2 v-if="answered">Danke, die Scores werden angezeigt, sobald den Counter abläuft!</h2>
-        <ul 
-            v-for="answer in question.answers"
-            :key="answer.id"
-            v-else
-        >
-            <li>
-                <a @click="postAnswer(answer.id)" class="answer-container">
-                    {{ answer.text }}
-                </a>
-            </li>
-        </ul>
+        
+        <div class="game-container">
+            <div class="answer" v-for="answer in question.answers"
+            :key="answer.id" v-else>
+            <a @click="postAnswer(answer.id)" class="answer-container">
+            {{ answer.text }}
+        </a>
+            </div>
+        </div>
     </div>
     `
 }

@@ -1,13 +1,13 @@
-<div id="app">
-    <h1>Session id: <h1 style="color: red;">{{ sessionid }}</h1>
+<div class="default-page" id="app">
+    <h1>Quiz ID: <h1 style="color: red;">{{ sessionid }}</h1>
     </h1>
-    <div v-if="isOwner" class="d-flex flex-row justify-content-center align-items-space-evenly">
+    <div v-if="isOwner" class="d-flex flex-row justify-content-between align-items-space-evenly">
         <a class="btn btn-danger btn-lg" href="">Quiz beenden</a>
         <div v-if="isNextEnabled">
 
-            <button v-if="status !== 'ended' && sessionid !== ''" class="btn btn-secondary btn-lg"
+            <button v-if="status !== 'ended' && sessionid !== ''" class="btn btn-secondary btn-lg left-btn"
                 @click="nextQuestion">Nächste Frage</button>
-            <button v-else-if="status === 'ended'" class="btn btn-secondary btn-lg" @click="nextQuestion">Quiz erneut
+            <button v-else-if="status === 'ended'" class="btn btn-secondary btn-lg right-btn" @click="nextQuestion">Quiz erneut
                 started</button>
         </div>
     </div>

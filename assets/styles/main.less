@@ -152,6 +152,8 @@ body {
     margin-bottom: 10px;
     padding: 20px;
     border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
     background: #001D3D;
 
     @media only screen and (max-width: 767px) {
@@ -161,6 +163,8 @@ body {
 
 .answer-container:hover {
   background: #B8C5D9;
+  color: #013063 !important;
+  font-weight: bold;
 }
 
 .input-small {
@@ -388,4 +392,42 @@ body {
   width: 90%;
   background: #001D3D;
   border-radius: 20px;
+}
+
+.leaderboard{
+  background-color: #001D3D;
+  border-radius: 15px;
+}
+
+.game-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.answer{
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.game-id{
+  font-size: 16px;
+  font-weight: bold;
+  padding:10px;
+}
+
+.timer{
+  float: right;
+  padding: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: red;
+}
+
+.owner-btn{
+  padding:10px;
+}
+
+.answers-container > h1, p {
+ padding: 5px;
 }

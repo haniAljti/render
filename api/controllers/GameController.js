@@ -128,7 +128,7 @@ module.exports = {
   next: async function (req, res) {
 
     var sessionid = req.params.sessionid
-    var time = 10000;
+    var time = 1000000;
 
     var startedQuiz = await StartedQuiz.findOne({ sessionId: sessionid });
     var questions = await Question.find({ quiz: startedQuiz.quiz }).sort('id ASC').populate('answers');
