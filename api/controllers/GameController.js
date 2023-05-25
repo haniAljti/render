@@ -245,7 +245,7 @@ module.exports = {
         }));
 
       await sails.sockets.leave(req.socket, participant.sessionId);
-      await sails.sockets.join(req.socket, sessionid);
+      
 
       await Participant.updateOne({ user: userid })
         .set(
@@ -254,6 +254,8 @@ module.exports = {
           }
         );
     }
+
+    await sails.sockets.join(req.socket, sessionid);
 
     let participants = await Participant.find({ sessionId: sessionid }).populate("user");
 
@@ -336,7 +338,7 @@ module.exports = {
     if (!req.me) {
       return res.unauthorized();
     }
-    
+
     var answerId = req.params.answerid
     var me = req.me.id
 
