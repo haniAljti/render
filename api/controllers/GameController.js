@@ -16,12 +16,13 @@ module.exports = {
     sails.log.debug("Creating new session for quiz " + quizid);
 
     var socket = req.socket;
-
     var sessionid = Math.floor(100000 + Math.random() * 900000); // generates random 6 digits number
 
-    var startedQuiz = await StartedQuiz.findOne({ startedBy: me })
+    var startedQuiz = await StartedQuiz.findOne({ startedBy: me });
 
     if (!startedQuiz) {
+
+      sails.log.debug("Game does not exist. Creating one with session id: " + sessionid);
 
       await Participant.create(
         {
@@ -38,31 +39,21 @@ module.exports = {
         }
       );
 
-      let user = await User.findOne({ id: me });
-
       await sails.sockets.broadcast(sessionid, 'state', { status: 'created', owner: me })
-      if (!user) {
-        await sails.sockets.broadcast(
-          sessionid,
-          'participants',
-          {
-            name: user.fullName,
-            emailAddress: user.emailAddress
-          }
-        )
-      }
 
     } else {
-      if (startedQuiz.quiz === quizid) {
+      sails.log.debug("A game already exists: " + JSON.stringify(startedQuiz));
+      if (startedQuiz.quiz == quizid) {
+        sails.log.debug("Game Already exists, no need to create one");
         // no need to start again
+        // return old session id
+        sessionid = startedQuiz.sessionId;
       } else {
 
+        sails.log.debug("Switching game '" + startedQuiz.sessionId + "' with '" + sessionid + "'");
         // end and replace the last session
         await sails.sockets.broadcast(startedQuiz.sessionId, 'state', { status: 'ended', owner: me });
-        await sails.sockets.leaveAll(req.socket, startedQuiz.sessionId);
-
-        await Participant.updateOne({ user: me })
-          .set({ sessionId: sessionid });
+        await sails.sockets.leave(req.socket, startedQuiz.sessionId);
 
         await StartedQuiz.updateOne({ sessionId: startedQuiz.sessionId })
           .set(
@@ -71,10 +62,35 @@ module.exports = {
               quiz: quizid
             }
           );
+
+        await Participant.updateOne({ user: me })
+          .set({ sessionId: sessionid });
       }
     }
 
     await sails.sockets.join(socket, sessionid);
+
+    await Participant
+      .update({ sessionId: sessionid })
+      .set({ score: 0 });
+
+      await StartedQuiz
+      .update({ sessionId: sessionid })
+      .set({ currentQuestion: -1 });
+
+    var participants = await Participant.find({ sessionId: sessionid })
+      .populate('user');
+
+    sails.sockets.broadcast(
+      sessionid,
+      'participants',
+      participants.map(participant => {
+        return {
+          participant: participant.user.fullName,
+          score: participant.score
+        }
+      })
+    );
 
     return res.json({ sessionid: sessionid });
   },
@@ -84,7 +100,7 @@ module.exports = {
     var sessionid = req.params.sessionid
     var time = 60000;
 
-    var startedQuiz = await StartedQuiz.findOne({ sessionId: sessionid })
+    var startedQuiz = await StartedQuiz.findOne({ sessionId: sessionid });
     await sails.sockets.broadcast(sessionid, 'state', { status: 'started', owner: req.me.id });
     var questions = await Question.find({ quiz: startedQuiz.quiz }).populate('answers');
     var questionIndex = 0;
@@ -128,22 +144,15 @@ module.exports = {
   next: async function (req, res) {
 
     var sessionid = req.params.sessionid
-    var time = 1000000;
+    var time = 2000;
 
     var startedQuiz = await StartedQuiz.findOne({ sessionId: sessionid });
     var questions = await Question.find({ quiz: startedQuiz.quiz }).sort('id ASC').populate('answers');
 
-    var nextQustion = startedQuiz.currentQuestion;
+    var nextQustion = startedQuiz.currentQuestion + 1;
 
-    if (nextQustion + 1 > questions.length) {
-      nextQustion = 0
-      await sails.sockets.broadcast(sessionid, 'state', { status: 'ended', owner: req.me.id })
-      await Participant.update({ sessionId: sessionid })
-        .set(
-          { score: 0 }
-        )
-    } else {
-      nextQustion++
+    if (nextQustion > questions.length - 1) {
+      return res.badRequest();
     }
 
     if (nextQustion === 1) {
@@ -155,6 +164,10 @@ module.exports = {
       'nextQuestion',
       { time: time, question: questions[nextQustion] }
     );
+
+    if (nextQustion == questions.length - 1) {
+      await sails.sockets.broadcast(sessionid, 'state', { status: 'ended', owner: req.me.id })
+    }
 
     await StartedQuiz.updateOne({ sessionId: sessionid })
       .set({ currentQuestion: nextQustion })
@@ -177,7 +190,7 @@ module.exports = {
         );
       },
       time
-    )
+    );
   },
 
   join: async function (req, res) {
@@ -272,19 +285,21 @@ module.exports = {
 
     var me = req.me.id
     var sessionid = req.params.sessionid
+    sails.log.debug(req.params);
 
     var startedQuiz = await StartedQuiz.findOne({ sessionId: sessionid });
-    var isOwner = startedQuiz.startedBy === me
+
+    var isOwner = startedQuiz.startedBy == me
 
     if (!isOwner) {
-      return res.unauthorized();
+      return res.forbidden();
     }
 
-    await sails.sockets.broadcast(sessionid, 'state', { status: 'ended', owner: me })
+    await sails.sockets.broadcast(sessionid, 'state', { status: 'ended', owner: me });
     await sails.sockets.leaveAll(sessionid);
 
-    await StartedQuiz.destroyOne({ sessionid: sessionid });
-    await Participant.destroy({ sessionid: sessionid })
+    await StartedQuiz.destroyOne({ sessionId: sessionid });
+    await Participant.destroy({ sessionId: sessionid });
   },
 
   answer: async function (req, res) {

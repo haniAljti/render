@@ -36,9 +36,9 @@ export default {
 
         <h2 v-if="answered">Danke, die Scores werden angezeigt, sobald den Counter abläuft!</h2>
         
-        <div class="game-container">
+        <div class="game-container" v-else>
             <div class="answer" v-for="answer in question.answers"
-            :key="answer.id" v-else>
+            :key="answer.id">
             <a @click="postAnswer(answer.id)" class="answer-container">
             {{ answer.text }}
         </a>

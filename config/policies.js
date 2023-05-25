@@ -41,5 +41,8 @@ module.exports.policies = {
     editOne: 'is-logged-in',
     findOne: 'is-logged-in',
     updateOne: 'is-logged-in'
+  },
+  GameController:{
+    '*': 'is-logged-in'
   }
 };

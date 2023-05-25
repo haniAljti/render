@@ -1,5 +1,5 @@
 export default {
-    props: ['status', 'participants', 'startedBy'],
+    props: ['status', 'participants'],
     template: `
     <div>
 

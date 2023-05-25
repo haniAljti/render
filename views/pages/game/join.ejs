@@ -3,12 +3,12 @@
         Quiz ID: {{ sessionid }}
     </div>
     <div v-if="isOwner" class="d-flex flex-row justify-content-between align-items-space-evenly">
-        <a class="btn btn-danger btn-lg" href="">Quiz beenden</a>
+        <a class="btn btn-danger btn-lg" @click="stop">Quiz beenden</a>
         <div v-if="isNextEnabled">
 
             <button v-if="status !== 'ended' && sessionid !== ''" class="btn btn-secondary btn-lg left-btn"
                 @click="nextQuestion">Nächste Frage</button>
-            <button v-else-if="status === 'ended'" class="btn btn-secondary btn-lg right-btn" @click="nextQuestion">Quiz erneut
+            <button v-else-if="status === 'ended'" class="btn btn-secondary btn-lg right-btn" @click="start">Quiz erneut
                 started</button>
         </div>
     </div>
@@ -21,7 +21,7 @@
     <question v-if="currentQuestion !== null" :sessionid="sessionid" :question="currentQuestion" :timer="timer">
     </question>
 
-    <lobby v-else :status="status" :participants="participants" :sessionid="sessionid" :startedBy="startedBy"></lobby>
+    <lobby v-else :status="status" :participants="participants" :sessionid="sessionid"></lobby>
     <!-- <router-view :status="status" :participants="participants" :startedBy="startedBy"> -->
     <!-- </router-view> -->
 </div>
@@ -77,13 +77,10 @@
                     function (state) {
                         console.log(`Game status has changed: ` + state.owner)
                         ref.status = state.status
-                        // if (state.owner)
-                        // ref.isOwner = true
-                        // else ref.isOwner = false
                     }
                 )
 
-                // Create session
+                // Join session
                 io.socket.post(
                     '/game/' + this.sessionid + '/join',
                     function (resData, jwRes) {
@@ -103,19 +100,30 @@
                     io.socket.post(
                         '/game/' + this.sessionid + '/finish',
                         function () {
-                            this.goBack()
+                            window.location.href = origin;
                         });
                 },
                 leave: function () {
-                    console.log("Ending game...")
+                    console.log("Leaving game...")
                     io.socket.post(
                         '/game/' + this.sessionid + '/leave',
                         function () {
-                            this.goBack()
+                            window.location.href = origin;
                         });
                 },
-                goBack: function () {
-                    window.location.href = origin;
+                start: function () {
+                    let ref = this
+                    var quizid = location.pathname.split('/')[3]
+                    io.socket.post(
+                    '/quiz/' + quizid + '/create',
+                    function (resData, jwRes) {
+                        console.log(resData)
+                        ref.sessionCreated = true
+                        ref.sessionid = resData.sessionid + ""
+                        ref.status = "created"
+                        ref.isOwner = true
+                    }
+                )
                 }
             }
         }
