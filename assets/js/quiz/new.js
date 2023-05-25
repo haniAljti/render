@@ -11,7 +11,7 @@ function addAnswer() {
                 
                 <div class="form-group">
                     <label class="form-label" for="title">Antwort</label>
-                    <input class="form-input" type="text" id="title" name="title" style="width: 100%;">
+                    <input class="form-input" maxlength="50" type="text" id="title" name="title" style="width: 100%;">
                 </div>
     
                 <div class="form-group d-flex flex-row">

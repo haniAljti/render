@@ -3,12 +3,12 @@
         <form class="form-container" action="/category/<%=category.id%>/update" method="post">
             <div class="form-group">
                 <label class="form-label" for="name">Name</label>
-                <input class="form-input" type="text" id="name" name="name" value="<%= category.name %>">
+                <input class="form-input" maxlength="25" type="text" id="name" name="name" value="<%= category.name %>">
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="name">Beschreibung</label>
-                <input class="form-input" type="text" id="description" name="description" value="<%= category.description %>">
+                <input class="form-input" type="text" maxlength="122" id="description" name="description" value="<%= category.description %>">
             </div>
 
             <div class="form-button-container">
