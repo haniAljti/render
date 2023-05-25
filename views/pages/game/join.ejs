@@ -85,6 +85,11 @@
                     '/game/' + this.sessionid + '/join',
                     function (resData, jwRes) {
                         console.log(resData)
+
+                        if (jwRes.statusCode == 401) {
+                            window.location.href = origin + "/login";
+                        }
+
                         ref.isOwner = resData.isOwner
                     }
                 )
@@ -117,6 +122,11 @@
                     io.socket.post(
                     '/quiz/' + quizid + '/create',
                     function (resData, jwRes) {
+
+                        if (jwRes.statusCode == 401) {
+                            window.location.href = origin + "/login";
+                        }
+
                         console.log(resData)
                         ref.sessionCreated = true
                         ref.sessionid = resData.sessionid + ""

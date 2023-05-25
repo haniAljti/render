@@ -10,6 +10,10 @@ module.exports = {
       return res.badRequest();
     }
 
+    if (!req.me) {
+      return res.unauthorized();
+    }
+
     var quizid = req.params.id;
     var me = req.me.id;
 
@@ -143,6 +147,14 @@ module.exports = {
 
   next: async function (req, res) {
 
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
+
+    if (!req.me) {
+      return res.unauthorized();
+    }
+
     var sessionid = req.params.sessionid
     var time = 2000;
 
@@ -197,6 +209,10 @@ module.exports = {
 
     if (!req.isSocket) {
       return res.badRequest();
+    }
+
+    if (!req.me) {
+      return res.unauthorized();
     }
 
     let userid = req.me.id
@@ -262,6 +278,10 @@ module.exports = {
       return res.badRequest();
     }
 
+    if (!req.me) {
+      return res.unauthorized();
+    }
+
     await sails.sockets.leave(req.socket, participant.sessionId);
     await Participant.destroy({ user: req.me.id });
 
@@ -279,8 +299,13 @@ module.exports = {
   },
 
   finish: async function (req, res) {
+    
     if (!req.isSocket) {
       return res.badRequest();
+    }
+
+    if (!req.me) {
+      return res.unauthorized();
     }
 
     var me = req.me.id
@@ -304,6 +329,14 @@ module.exports = {
 
   answer: async function (req, res) {
 
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
+
+    if (!req.me) {
+      return res.unauthorized();
+    }
+    
     var answerId = req.params.answerid
     var me = req.me.id
 

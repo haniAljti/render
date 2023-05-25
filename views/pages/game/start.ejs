@@ -70,6 +70,11 @@
                 io.socket.post(
                     '/quiz/' + quizid + '/create',
                     function (resData, jwRes) {
+
+                        if (jwRes.statusCode == 401) {
+                            window.location.href = origin + "/login";
+                        }
+                        
                         console.log(resData)
                         ref.sessionCreated = true
                         ref.sessionid = resData.sessionid + ""
@@ -105,6 +110,11 @@
                     io.socket.post(
                     '/quiz/' + quizid + '/create',
                     function (resData, jwRes) {
+
+                        if (jwRes.statusCode == 401) {
+                            window.location.href = origin + "/login";
+                        }
+
                         console.log(resData)
                         ref.sessionCreated = true
                         ref.sessionid = resData.sessionid + ""
