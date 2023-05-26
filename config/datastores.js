@@ -54,7 +54,6 @@ module.exports.datastores = {
     host: '193.196.53.194',
     port: 33061,
     user: 'user16_prod',
-    password: 'u100113',
     database: 'quizzz_prod'
 
   },
