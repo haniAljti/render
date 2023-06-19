@@ -1,4 +1,6 @@
 
+let noCorrectAnswerDialogShown = false
+
 function addAnswer() {
     if ($(".quizzz-container").length < 4) {
         $("#answer-container").append(
@@ -25,29 +27,103 @@ function addAnswer() {
 }
 
 function removeAnswer() {
-    $(".delete-answer").click(function() {
+    $(".delete-answer").click(function () {
         $(this).parent().parent().remove();
-    }
-    )
+    })
 }
 
 
 function postQuestion(quizId) {
 
-    let body = createQuestion()
+    let isValid = validateQuiz();
 
-    console.log(body)
+    if (!isValid) {
+        return;
+    }
 
-    $.post("/quiz/" + quizId + "/question", body);
+    let body = createQuestion();
+    console.log(body);
+
+    $.post(
+        "/quiz/" + quizId + "/question",
+        body
+        )
+        .done(
+            function () {
+                window.location.href = origin + "/quiz/" + quizId;
+            }
+        );
 }
 
 function updateQuestion(questionId) {
 
-    let body = createQuestion()
+    let isValid = validateQuiz()
 
+    if (!isValid) {
+        return
+    }
+
+    let body = createQuestion()
     console.log(body)
 
     $.post("/question/" + questionId + "/update", body);
+}
+
+function validateQuiz() {
+
+    let isTitleValid = $("#title").val() !== ''
+    let isQuestionValid = $("#question").val() !== ''
+
+    if (!isTitleValid) {
+        showError("Titel darf nicht leer sein")
+        return false
+    }
+
+    if (!isQuestionValid) {
+        showError("Die Fragestellung darf nicht leer sein")
+        return false
+    }
+
+    let hasCorrectAnswer = false
+
+    if (!noCorrectAnswerDialogShown) {
+        $(".quizzz-container").each(function (index) {
+            if (hasCorrectAnswer) return;
+
+            const isChecked = $(this).find('input').eq(1).is(":checked")
+            if (isChecked) {
+                hasCorrectAnswer = true
+            }
+        });
+    }
+
+    if (!hasCorrectAnswer && !noCorrectAnswerDialogShown) {
+        showError('Keine Antwort ist als Korrect markiert! Wenn du sicher bist, dass du fortfahren möchtest, drücke nochmal auf den Button.')
+        noCorrectAnswerDialogShown = true
+        return false
+    }
+
+    let AnswerTextEmpty = false
+
+    $(".quizzz-container").each(function (index) {
+        const text = $(this).find('input').eq(0).val()
+        if (text === '') {
+            AnswerTextEmpty = true
+        }
+    })
+
+    if (AnswerTextEmpty) {
+        showError('Antwort darf nicht leer sein.')
+        return false
+    }
+
+    return true
+}
+
+function showError(message) {
+    $('.error-container').remove()
+    $('<div class="error-container"><span>' + message + '</span></div>')
+        .insertBefore(".form-button-container")
 }
 
 function createQuestion() {

@@ -35,9 +35,8 @@ module.exports = {
             };
         });
 
-        await Answer.createEach(answersData)
-
-        res.redirect('pages/quiz/' + req.params.id);
+        await Answer.createEach(answersData);
+        return res.ok();
     },
 
     findOne: async function (req, res) {

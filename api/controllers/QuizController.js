@@ -12,8 +12,7 @@ module.exports = {
 
     create: async function (req, res) {
         sails.log.debug("Create new quiz....")
-        let quiz = await Quiz.create(req.allParams());
-        res.redirect('/quiz');
+        await Quiz.create(req.allParams());
     },
 
     findOne: async function (req, res) {

@@ -156,7 +156,7 @@ module.exports = {
     }
 
     var sessionid = req.params.sessionid
-    var time = 2000;
+    var time = 15000;
 
     var startedQuiz = await StartedQuiz.findOne({ sessionId: sessionid });
     var questions = await Question.find({ quiz: startedQuiz.quiz }).sort('id ASC').populate('answers');
