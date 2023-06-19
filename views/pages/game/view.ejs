@@ -13,7 +13,7 @@
         </div>
     </div>
     <div v-else>
-        <a class="btn btn-danger btn-lg" href="">Quiz verlassen</a>
+        <a class="btn btn-danger btn-lg" @click="leave">Quiz verlassen</a>
         <h2 v-if="answered">Das Spiel fängt gleich an!</h2>
     </div>
 
