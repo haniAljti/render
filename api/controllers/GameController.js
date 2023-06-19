@@ -274,6 +274,41 @@ module.exports = {
     return res.json({ isOwner: userid === startedQuiz.startedBy });
   },
 
+  view: async function (req, res) {
+
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
+
+    if (!req.me) {
+      return res.unauthorized();
+    }
+
+    let userid = req.me.id
+    let sessionid = req.params.sessionid
+    let participant = await Participant.findOne({ id: userid });
+
+    if (participant){
+      sails.log.debug("User is already in a session!")
+      sails.log.debug("changing session for user with id " + userid)
+
+      let participants = await Participant.find({ sessionId: sessionid }).populate("user");
+
+      await sails.sockets.broadcast(
+        sessionid,
+        'participants',
+        participants.map(participant => {
+          return {
+            participant: participant.user.fullName,
+            score: participant.score
+          }
+        }));
+    }
+    let startedQuiz = await StartedQuiz.findOne({ sessionId: sessionid });
+
+    return res.json({ isOwner: userid === startedQuiz.startedBy });
+  },
+
   leave: async function (req, res) {
 
     if (!req.isSocket) {

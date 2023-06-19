@@ -72,6 +72,7 @@ module.exports.routes = {
   //StartedQuiz
   'GET /game/start/:quizid': { view: 'pages/game/start'},
   'GET /game/join/:sessionid': { view: 'pages/game/join'},
+  'GET /game/view/:sessionid': { view: 'pages/game/view'},
   'POST /quiz/:id/create': GameController.create,
   'POST /game/:sessionid/start': GameController.start,
   'POST /game/:sessionid/answer/:answerid': GameController.answer,

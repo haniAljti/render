@@ -80,9 +80,9 @@
                     }
                 )
 
-                // Join session
+                // View session
                 io.socket.post(
-                    '/game/' + this.sessionid + '/join',
+                    '/game/' + this.sessionid + '/view',
                     function (resData, jwRes) {
                         console.log(resData)
 
