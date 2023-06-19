@@ -1,0 +1,144 @@
+<div class="default-page" id="app">
+    <div class="game-id">
+        Quiz ID: {{ sessionid }}
+    </div>
+    <div v-if="isOwner" class="d-flex flex-row justify-content-between align-items-space-evenly">
+        <a class="btn btn-danger btn-lg" @click="stop">Quiz beenden</a>
+        <div v-if="isNextEnabled">
+
+            <button v-if="status !== 'ended' && sessionid !== ''" class="btn btn-secondary btn-lg left-btn"
+                @click="nextQuestion">Nächste Frage</button>
+            <button v-else-if="status === 'ended'" class="btn btn-secondary btn-lg right-btn" @click="start">Quiz erneut
+                started</button>
+        </div>
+    </div>
+    <div v-else>
+        <a class="btn btn-danger btn-lg" href="">Quiz verlassen</a>
+        <h2 v-if="answered">Das Spiel fängt gleich an!</h2>
+    </div>
+
+
+    <question v-if="currentQuestion !== null" :sessionid="sessionid" :question="currentQuestion" :timer="timer">
+    </question>
+
+    <lobby v-else :status="status" :participants="participants" :sessionid="sessionid"></lobby>
+    <!-- <router-view :status="status" :participants="participants" :startedBy="startedBy"> -->
+    <!-- </router-view> -->
+</div>
+
+<script type="module">
+
+    const { createApp } = Vue
+
+    import Lobby from "/vue/game/Lobby.js";
+    import QuestionView from "/vue/game/QuestionView.js";
+
+    // 5. Create and mount the root instance.
+    const app = createApp(
+        {
+            data() {
+                return {
+                    participants: [],
+                    status: 'creating',
+                    isOwner: false,
+                    sessionid: '',
+                    currentQuestion: null,
+                    timer: 0,
+                    isNextEnabled: true
+                }
+            },
+            mounted() {
+
+                var ref = this
+                ref.sessionid = location.pathname.split('/')[3]
+
+                // Subscribe to game events
+                io.socket.on(
+                    'nextQuestion',
+                    function (question) {
+                        ref.currentQuestion = question.question
+                        ref.timer = question.time / 1000
+                        ref.isNextEnabled = false
+                        console.log(question)
+                    }
+                )
+
+                io.socket.on(
+                    'participants',
+                    function (participants) {
+                        ref.participants = participants
+                        ref.currentQuestion = null
+                        ref.isNextEnabled = true
+                    }
+                )
+
+                io.socket.on(
+                    'state',
+                    function (state) {
+                        console.log(`Game status has changed: ` + state.owner)
+                        ref.status = state.status
+                    }
+                )
+
+                // View session
+                io.socket.post(
+                    '/game/' + this.sessionid + '/view',
+                    function (resData, jwRes) {
+                        console.log(resData)
+
+                        if (jwRes.statusCode == 401) {
+                            window.location.href = origin + "/login";
+                        }
+
+                        ref.isOwner = resData.isOwner
+                    }
+                )
+            },
+            methods: {
+                nextQuestion: function () {
+                    console.log(`Requisting next question...`)
+                    io.socket.post('/game/' + this.sessionid + '/next');
+
+                },
+                stop: function () {
+                    console.log("Ending game...")
+                    io.socket.post(
+                        '/game/' + this.sessionid + '/finish',
+                        function () {
+                            window.location.href = origin;
+                        });
+                },
+                leave: function () {
+                    console.log("Leaving game...")
+                    io.socket.post(
+                        '/game/' + this.sessionid + '/leave',
+                        function () {
+                            window.location.href = origin;
+                        });
+                },
+                start: function () {
+                    let ref = this
+                    var quizid = location.pathname.split('/')[3]
+                    io.socket.post(
+                    '/quiz/' + quizid + '/create',
+                    function (resData, jwRes) {
+
+                        if (jwRes.statusCode == 401) {
+                            window.location.href = origin + "/login";
+                        }
+
+                        console.log(resData)
+                        ref.sessionCreated = true
+                        ref.sessionid = resData.sessionid + ""
+                        ref.status = "created"
+                        ref.isOwner = true
+                    }
+                )
+                }
+            }
+        }
+    );
+    app.component("lobby", Lobby);
+    app.component("question", QuestionView);
+    app.mount('#app')
+</script>
