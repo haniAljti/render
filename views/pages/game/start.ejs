@@ -74,7 +74,7 @@
                         if (jwRes.statusCode == 401) {
                             window.location.href = origin + "/login";
                         }
-                        
+
                         console.log(resData)
                         ref.sessionCreated = true
                         ref.sessionid = resData.sessionid + ""
@@ -108,20 +108,20 @@
                     let ref = this
                     var quizid = location.pathname.split('/')[3]
                     io.socket.post(
-                    '/quiz/' + quizid + '/create',
-                    function (resData, jwRes) {
+                        '/quiz/' + quizid + '/create',
+                        function (resData, jwRes) {
 
-                        if (jwRes.statusCode == 401) {
-                            window.location.href = origin + "/login";
+                            if (jwRes.statusCode == 401) {
+                                window.location.href = origin + "/login";
+                            }
+
+                            console.log(resData)
+                            ref.sessionCreated = true
+                            ref.sessionid = resData.sessionid + ""
+                            ref.status = "created"
+                            ref.isOwner = true
                         }
-
-                        console.log(resData)
-                        ref.sessionCreated = true
-                        ref.sessionid = resData.sessionid + ""
-                        ref.status = "created"
-                        ref.isOwner = true
-                    }
-                )
+                    )
                 }
             }
         }

@@ -16,71 +16,84 @@ module.exports = {
 
     var quizid = req.params.id;
     var me = req.me.id;
-
-    sails.log.debug("Creating new session for quiz " + quizid);
-
     var socket = req.socket;
-    var sessionid = Math.floor(100000 + Math.random() * 900000); // generates random 6 digits number
+    var sessionid = -1
+
+    // var sessionid = Math.floor(100000 + Math.random() * 900000); // generates random 6 digits number
 
     var startedQuiz = await StartedQuiz.findOne({ startedBy: me });
 
-    if (!startedQuiz) {
+    var createQuiz = async function () {
 
-      sails.log.debug("Game does not exist. Creating one with session id: " + sessionid);
+      var generatedSessionid = Math.floor(100000 + Math.random() * 900000);
+      sails.log.debug("New session created with id " + generatedSessionid);
 
       await Participant.create(
         {
-          sessionId: sessionid,
+          sessionId: generatedSessionid,
           user: me
         }
       );
 
       await StartedQuiz.create(
         {
-          sessionId: sessionid,
+          sessionId: generatedSessionid,
           quiz: req.params.id,
-          startedBy: me
+          startedBy: me,
+          currentQuestion: -1
         }
       );
 
-      await sails.sockets.broadcast(sessionid, 'state', { status: 'created', owner: me })
+      await sails.sockets.broadcast(generatedSessionid, 'state', { status: 'created', owner: me });
+
+      return generatedSessionid;
+    }
+
+    if (!startedQuiz) {
+
+      sessionid = await createQuiz();
+
+      sails.log.debug("Game does not exist. Created one with session id: " + sessionid);
 
     } else {
       sails.log.debug("A game already exists: " + JSON.stringify(startedQuiz));
-      if (startedQuiz.quiz == quizid) {
-        sails.log.debug("Game Already exists, no need to create one");
-        // no need to start again
-        // return old session id
-        sessionid = startedQuiz.sessionId;
-      } else {
 
+      if (startedQuiz.quiz != quizid) {
         sails.log.debug("Switching game '" + startedQuiz.sessionId + "' with '" + sessionid + "'");
         // end and replace the last session
         await sails.sockets.broadcast(startedQuiz.sessionId, 'state', { status: 'ended', owner: me });
         await sails.sockets.leave(req.socket, startedQuiz.sessionId);
 
-        await StartedQuiz.updateOne({ sessionId: startedQuiz.sessionId })
-          .set(
+        await StartedQuiz.destroy({sessionId: startedQuiz.sessionId});
+        await Participant.destroy({sessionId: startedQuiz.sessionId});
+
+        sessionid = await createQuiz();
+      } else {
+
+        // no need to start again! return old session id
+        sessionid = startedQuiz.sessionId;
+
+        sails.log.debug("Game Already exists, no need to create one");
+
+        var participant = await Participant.findOne({ user: me });
+
+        if (!participant) {
+          await Participant.create(
             {
               sessionId: sessionid,
-              quiz: quizid
+              user: me,
+              score: 0
             }
           );
-
-        await Participant.updateOne({ user: me })
-          .set({ sessionId: sessionid });
+        } 
       }
     }
 
+    if (sessionid === -1) {
+      sails.log.debug("Failed to create or retrive old session id");
+    }
+
     await sails.sockets.join(socket, sessionid);
-
-    await Participant
-      .update({ sessionId: sessionid })
-      .set({ score: 0 });
-
-      await StartedQuiz
-      .update({ sessionId: sessionid })
-      .set({ currentQuestion: -1 });
 
     var participants = await Participant.find({ sessionId: sessionid })
       .populate('user');
@@ -217,10 +230,12 @@ module.exports = {
 
     let userid = req.me.id
     let sessionid = req.params.sessionid
-    let participant = await Participant.findOne({ id: userid });
+    let participant = await Participant.findOne({ user: userid });
+
+    sails.log.debug("user " + userid + " is joining " + sessionid);
 
     if (!participant) {
-      sails.log.debug("adding user to session " + userid)
+      sails.log.debug("adding user to session " + userid);
       participant = await Participant.create(
         {
           sessionId: sessionid,
@@ -228,8 +243,8 @@ module.exports = {
         }
       );
     } else {
-      sails.log.debug("User is already in a session!")
-      sails.log.debug("changing session for user with id " + userid)
+      sails.log.debug("User is already in a session!");
+      sails.log.debug("changing session for user with id " + userid);
 
       // leaving old session since a user can only join one session at a time
       let participants = await Participant.find({ sessionId: participant.sessionId }).populate("user");
@@ -245,7 +260,7 @@ module.exports = {
         }));
 
       await sails.sockets.leave(req.socket, participant.sessionId);
-      
+
 
       await Participant.updateOne({ user: userid })
         .set(
@@ -336,7 +351,7 @@ module.exports = {
   },
 
   finish: async function (req, res) {
-    
+
     if (!req.isSocket) {
       return res.badRequest();
     }
