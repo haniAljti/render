@@ -2,9 +2,9 @@
 
 <div class="default-page">
     <section class="main category">
-    
+
         <div class="row d-flex category-container">
-            <div class="header"> 
+            <div class="header">
                 User
                 <div class="header-info">
                     <div class="name">Mitglieder</div>
@@ -19,56 +19,60 @@
 
 
             <form action="/user" class="search-container">
-                <div class="row justify-content-center">    
-                 <div class="col-xs-12 col-md-8">
-                  <div class="input-group">
-                   <div class="input-group-btn search-panel">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      <span id="search_concept">Alles</span> 
-                    </button>
-                    <ul class="dropdown-menu scrollable-dropdown" role="menu">
-                        <li><a href="name">Name</a></li>
-                      <!-- <li><a href="birthday">Geburtstag</a></li> -->
-                      <li><a href="count">Anzahl Quiz</a></li>
-                    </ul>
-                   </div>
-                   <input type="hidden" name="filter" value="all" id="filter">
-                   <input type="text" maxlength="50" class="form-control" name="q" id="search" placeholder="Search">
-                    <span class="input-group-btn">
-                     <button class="btn btn-default" type="submit">
-                        <i class="fa fa-search"></i>
-                     </button>
-                    </span>
-                  </div>
-                 </div>
+                <div class="row justify-content-center">
+                    <div class="col-xs-12 col-md-8">
+                        <div class="input-group">
+                            <div class="input-group-btn search-panel">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span id="search_concept">Alles</span>
+                                </button>
+                                <ul class="dropdown-menu scrollable-dropdown" role="menu">
+                                    <li><a href="name">Name</a></li>
+                                    <!-- <li><a href="birthday">Geburtstag</a></li> -->
+                                    <li><a href="email">Email Adresse</a></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="filter" value="all" id="filter">
+                            <input type="text" maxlength="50" class="form-control" name="q" id="search"
+                                placeholder="Search">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-              </div>
+        </div>
 
-        <% users.forEach(function(user){ %>
-            <div class="row d-flex justify-content-center">
-                <div class="test-container">
-                    <div class="category-info d-flex flex-row align-items-center">
-                        <div>
-                            <div class="name">
-                                <%= user.fullName %>
+        <% if (users.length> 0) { %>
+            <% users.forEach(function(user){ %>
+                <div class="row d-flex justify-content-center">
+                    <div class="test-container">
+                        <div class="category-info d-flex flex-row align-items-center">
+                            <div>
+                                <div class="name">
+                                    <%= user.fullName %>
+                                </div>
+                                <div class="description">
+                                    <%= user.description %>
+                                </div>
                             </div>
-                            <div class="description">
-                                <%= user.description %>
-                            </div>
+
+                            <a href="/user/<%= user.id %>" style="margin: 10px;"><i
+                                    class="fa fa-solid fa-chevron-right"></i></a>
+
                         </div>
 
-                        <a href="/user/<%= user.id %>" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
+                        <div class="icons">
+                            <a href="/user/<%= user.id %>/edit"><i class="fas fa-pen edit"></i></a>
+                            <a href="/user/<%= user.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
+                        </div>
 
                     </div>
-
-                    <div class="icons">
-                        <a href="/user/<%= user.id %>/edit"><i class="fas fa-pen edit"></i></a>
-                        <a href="/user/<%= user.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
-                    </div>
-
                 </div>
-            </div>
-        <% }); %>
+                <% }); %>
+                    <% } %>
     </section>
 
 </div>

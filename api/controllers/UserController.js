@@ -14,21 +14,27 @@ module.exports = {
     let users;
     if (req.query.q && req.query.q.length > 0) {
       if (req.query.filter === 'all') {
+        // await User.query(
+        //   'SELECT * FROM user WHERE fullName LIKE $1 OR emailAddress LIKE $1',
+        //   [ req.query.q ],
+        //   async function (err, rawResult) {
+        //     users = rawResult.rows
+        //   }
+        // );
         users = await User.find({
-          //or : [{
           fullName: {
             'contains': req.query.q
           }
-          //}]
         });
       }
-      else if (req.query.filter === 'birthday') {
+      else if (req.query.filter === 'email') {
         users = await User.find({
-          birthday: {
+          emailAddress: {
             'contains': req.query.q
           }
         });
-      } else if (req.query.filter === 'fullName') {
+      } 
+      else if (req.query.filter === 'name') {
         users = await User.find({
           fullName: {
             'contains': req.query.q
