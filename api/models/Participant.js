@@ -1,8 +1,7 @@
 module.exports = {
     attributes: {
         sessionId: {
-            model: 'startedQuiz',
-            unique: true
+            model: 'startedQuiz'
         },
         user: {
             model: 'user',
