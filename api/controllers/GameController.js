@@ -50,6 +50,7 @@ module.exports = {
     }
 
     if (!startedQuiz) {
+      await Participant.destroy({ user: me });
 
       sessionid = await createQuiz();
 
