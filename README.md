@@ -2,6 +2,20 @@
 
 a [Sails v1](https://sailsjs.com) application
 
+## Spezifikation und Design
+Dies sollten die kombinierten Inhalte aus Blatt1 und Blatt 2 sein, entsprechend der tatsächlichen
+Implementierung angepasst (Mockups / Wireframes müssen nicht angepasst werden).
+
+## Implementierung
+Beschreibung der Implementierung der einzelnen Use Cases.
+
+## Bereitstellung
+URL der Applikation in der Google App Engine, sowie Benutzernamen und Passwörter für jeweils
+einen User aus einer Benutzergruppe.
+
+## Optimierung
+Beschreibung der Optimierungsmaßnahmen, wie SEO oder Performance Tuning.
+
 
 ### Links
 
