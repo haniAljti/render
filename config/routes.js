@@ -23,6 +23,8 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
 
+  '/service': { view: 'pages/service' },
+
   //login
   'GET /signup': { action: 'entrance/view-signup' },
   'POST /signup': { action: 'entrance/signup' },
