@@ -66,7 +66,11 @@ function updateQuestion(questionId) {
     let body = createQuestion()
     console.log(body)
 
-    $.post("/question/" + questionId + "/update", body);
+    $.post("/question/" + questionId + "/update", body).done(
+        function () {
+            window.location.href = origin + "/question/" + questionId;
+        }
+    );;
 }
 
 function validateQuiz() {
