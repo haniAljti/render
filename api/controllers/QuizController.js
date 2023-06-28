@@ -49,5 +49,22 @@ module.exports = {
         res.redirect('/quiz');
     },
 
+    destroy: async function (req, res) {
+
+        let userId = req.session.userId;
+
+        if (!userId)
+            return res.forbidden();
+
+        let currentUser = await User.findOne({ id: userId });
+
+        if (!currentUser.isSuperAdmin)
+            return res.forbidden();
+
+        sails.log.debug("Destroy all quizzes....")
+        await Quiz.destroy();
+        res.redirect('/admin');
+    },
+
 
 };

@@ -92,7 +92,7 @@
           <ul class="navbar-nav ml-auto mr-auto ">
             <% if(req.me) { %>
               <% if(req.me.isSuperAdmin) { %>
-                <li class="nav-item"> <a href="/User">User - ADMIN</a> </li>
+                <li class="nav-item"> <a href="/admin">Admin</a> </li>
                 <% } %>
                 <!-- <li class="nav-item">
                   <div class="field">
@@ -102,9 +102,11 @@
                 </li> -->
                   <li class="nav-item"> <a href="/category">Kategorie</a> </li>
                   <li class="nav-item"> <a href="/quiz/index">Quiz</a> </li>
+                  <li class="nav-item"> <a href="/user/<%= req.me.id %>">Mein Profil</a> </li>
                   <li style="width: 50px;"></li>
                   <li class="nav-item"> <a href="/logout">Log Out</a> </li>
                   <% } else { %>
+                    <li class="nav-item"> <a href="/quiz/index">Quiz</a> </li>
                     <li class="nav-item"> <a href="/service">Services</a> </li>
                     <li style="width: 50px;"></li>
                     <li class="nav-item">

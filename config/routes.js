@@ -8,7 +8,9 @@
  * https://sailsjs.com/anatomy/config/routes-js
  */
 
+const AdminController = require("../api/controllers/AdminController");
 const GameController = require("../api/controllers/GameController");
+const QuizController = require("../api/controllers/QuizController");
 
 module.exports.routes = {
 
@@ -25,6 +27,9 @@ module.exports.routes = {
 
   '/service': { view: 'pages/service' },
 
+  //Admin
+  'GET /admin': AdminController.find,
+
   //login
   'GET /signup': { action: 'entrance/view-signup' },
   'POST /signup': { action: 'entrance/signup' },
@@ -34,7 +39,6 @@ module.exports.routes = {
 
   //User
   '/user/new': { view: 'pages/user/new' },
-  'GET /user/index': { controller: 'UserController', action: 'find' },
   'GET /user/show': { controller: 'UserController', action: 'findOne' },
   'GET /user/:id/edit': { controller: 'UserController', action: 'editOne' },
   'GET /user/:id/delete': { controller: 'UserController', action: 'destroyOne' },
@@ -49,6 +53,7 @@ module.exports.routes = {
   'GET /quiz/:id/edit': { controller: 'QuizController', action: 'editOne' },
   'POST /quiz/:id/update': { controller: 'QuizController', action: 'updateOne' },
   'GET /quiz/:id/delete': { controller: 'QuizController', action: 'destroyOne' },
+  'GET /quiz/delete': QuizController.destroy,
 
   //Question
   'GET /quiz/:id/question/new': { controller: 'QuestionController', action: 'new' },
