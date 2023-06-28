@@ -38,12 +38,33 @@ module.exports = {
 
 
   editOne: async function (req, res) {
+    let userId = req.session.userId;
+
+    if (!userId)
+      return res.forbidden();
+
+    let currentUser = await User.findOne({ id: userId });
+    
+    if (!currentUser.isSuperAdmin)
+      return res.forbidden();
+
     sails.log.debug("Edit single category....")
     let category = await Category.findOne({ id: req.params.id })
     res.view('pages/category/edit', { category: category });
   },
 
   updateOne: async function (req, res) {
+
+    let userId = req.session.userId;
+
+    if (!userId)
+      return res.forbidden();
+
+    let currentUser = await User.findOne({ id: userId });
+    
+    if (!currentUser.isSuperAdmin)
+      return res.forbidden();
+
     sails.log.debug("Update single category....")
     let category = await Category.updateOne({ id: req.params.id }).set(req.body);
     res.redirect('/category/' + req.params.id);
@@ -51,6 +72,16 @@ module.exports = {
 
 
   destroyOne: async function (req, res) {
+    let userId = req.session.userId;
+
+    if (!userId)
+      return res.forbidden();
+
+    let currentUser = await User.findOne({ id: userId });
+    
+    if (!currentUser.isSuperAdmin)
+      return res.forbidden();
+      
     sails.log.debug("Destroy single category....")
     await Category.destroyOne({ id: req.params.id });
     res.redirect('/category');
