@@ -4,12 +4,12 @@
         <form class="form-container" action="/quiz/<%=quiz.id%>/update" method="post">
             <div class="form-group">
                 <label class="form-label" for="name">Name</label>
-                <input class="form-input" type="text" id="name" name="name" value="<%= quiz.name %>">
+                <input class="form-input" maxlength="50" type="text" id="name" name="name" value="<%= quiz.name %>">
             </div>
 
             <div class="form-group">
                 <label class="form-label" for="name">Beschreibung</label>
-                <input class="form-input" type="text" id="description" name="description" value="<%= quiz.description %>">
+                <input class="form-input" maxlength="50" type="text" id="description" name="description" value="<%= quiz.description %>">
             </div>
 
             <div class="form-group">
