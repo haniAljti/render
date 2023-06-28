@@ -33,12 +33,12 @@
                             <a href="/quiz/<%= quiz.id %>" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
 
                         </div>
-
+                        <% if (quiz.userId == req.session.userId) { %>
                         <div class="icons">
                             <a href="/quiz/<%= quiz.id %>/edit"><i class="fas fa-pen edit"></i></a>
                             <a href="/quiz/<%= quiz.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                         </div>
-
+                        <% } %>
                     </div>
                 </div>
                 <% }); %>

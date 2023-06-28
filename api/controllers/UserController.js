@@ -98,7 +98,7 @@ module.exports = {
   },
 
   destroyOne: async function (req, res) {
-    sails.log.debug("Destroy single category....")
+    sails.log.debug("Destroy single user....")
     await User.destroyOne({ id: req.params.id });
     res.redirect('/user');
   },

@@ -6,35 +6,40 @@
 
             <div class="header-info">
                 <div class="name"><%= quiz.name %></div>
-                <a class="btn btn-warning my-auto btn-lg" href="/game/start/<%= quiz.id %>/">Quiz starten</a>
-
+                <% if (req.session.userId != null) { %>
+                    <a class="btn btn-warning my-auto btn-lg" href="/game/start/<%= quiz.id %>/">Quiz starten</a>
+                <% } %>
+                <% if (quiz.userId == req.session.userId) { %>
                 <div class="icons">
                     <a href="/quiz/<%= quiz.id %>/edit"><i class="fas fa-pen edit"></i></a>
                     <a href="/quiz/<%= quiz.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                 </div>
+                <% } %>
             </div>
 
 
             <div class="description">
                 <%= quiz.description %>
             </div>
-
-            <form action="/quiz/<%= quiz.id %>/feedback" method="post">
-                <span class="review-holder">
-                    <span class="review" data-id="<%= quiz.id %>" data-averageStars="<%= quiz.averageStars %>">
-                        <span data-description="hate it"></span>
-                        <span data-description="don't like it"></span>
-                        <span data-description="it's ok"></span>
-                        <span data-description="it's good"></span>
-                        <span data-description="it's great"></span>
+            <% if (req.session.userId != null) { %>
+                <form action="/quiz/<%= quiz.id %>/feedback" method="post">
+                    <span class="review-holder">
+                        <span class="review" data-id="<%= quiz.id %>" data-averageStars="<%= quiz.averageStars %>">
+                            <span data-description="hate it"></span>
+                            <span data-description="don't like it"></span>
+                            <span data-description="it's ok"></span>
+                            <span data-description="it's good"></span>
+                            <span data-description="it's great"></span>
+                        </span>
                     </span>
-                </span>
-            </form>
-    
-            <div class="add-new">
-                <a href="/quiz/<%= quiz.id %>/question/new"><i class="fa fa-solid fa-plus"></i>Neue Frage hinzufügen</a>
-            </div>
+                </form>
+            <% } %>
 
+            <% if (quiz.userId == req.session.userId) { %>
+                <div class="add-new">
+                    <a href="/quiz/<%= quiz.id %>/question/new"><i class="fa fa-solid fa-plus"></i>Neue Frage hinzufügen</a>
+                </div>
+            <% } %>
             <% quiz.questions.forEach(function(question){ %>
                 <div class="row d-flex justify-content-center">
                     <div class="test-container">
@@ -48,12 +53,12 @@
                             <a href="/question/<%= question.id %>" style="margin: 10px;"><i class="fa fa-solid fa-chevron-right"></i></a>
     
                         </div>
-    
+                        <% if (quiz.userId == req.session.userId) { %>
                         <div class="icons">
                             <a href="/question/<%= question.id %>/edit"><i class="fas fa-pen edit"></i></a>
                             <a href="/question/<%= question.id %>/delete"><i class="fa fa-solid fa-trash delete"></i></a>
                         </div>
-    
+                        <% } %>
                     </div>
                 </div>
             <% }); %>

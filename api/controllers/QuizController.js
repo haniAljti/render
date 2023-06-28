@@ -11,8 +11,13 @@ module.exports = {
     },
 
     create: async function (req, res) {
-        sails.log.debug("Create new quiz....")
-        await Quiz.create(req.allParams());
+        sails.log.debug("Create new quiz...." + JSON.stringify(req.allParams()))
+        var quizvalues = req.allParams();
+        quizvalues.userId = req.session.userId;
+        
+        sails.log.debug("Create new quiz...." + JSON.stringify(quizvalues))
+        
+        await Quiz.create(quizvalues);
     },
 
     findOne: async function (req, res) {
