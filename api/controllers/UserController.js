@@ -50,13 +50,18 @@ module.exports = {
   updateOne: async function (req, res) {
     sails.log.debug("Update single user....")
 
-    let userId = req.session.userId
+    let userId = req.session.userId;
     let user = await User.findOne({ id: userId });
 
     if (userId != req.params.id && !user.isSuperAdmin)
       return res.forbidden();
 
-    await User.updateOne({ id: req.params.id }).set(req.body);
+    let password = user.password;
+
+    if (req.body.passwordHash !== '' && req.body.passwordHash !== null)
+      password = await sails.helpers.passwords.hashPassword(req.body.passwordHash);
+
+    await User.updateOne({ id: req.params.id }).set({ fullName: req.body.name, password: password });
     res.redirect('/user/' + req.params.id);
   },
 
