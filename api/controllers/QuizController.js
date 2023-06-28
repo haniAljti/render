@@ -14,9 +14,9 @@ module.exports = {
         sails.log.debug("Create new quiz...." + JSON.stringify(req.allParams()))
         var quizvalues = req.allParams();
         quizvalues.userId = req.session.userId;
-        
+
         sails.log.debug("Create new quiz...." + JSON.stringify(quizvalues))
-        
+
         await Quiz.create(quizvalues);
     },
 
@@ -35,20 +35,49 @@ module.exports = {
 
 
     editOne: async function (req, res) {
+
+        let userId = req.session.userId;
+
+        if (!userId) return res.forbidden();
+
+        let quiz = await Quiz.findOne({ id: req.params.id });
+
+        if (userId != quiz.userId)
+            return res.forbidden();
+
         sails.log.debug("Edit single quiz....")
-        let quiz = await Quiz.findOne({ id: req.params.id })
+        
         let categories = await Category.find();
         res.view('pages/quiz/edit', { quiz: quiz, categories: categories });
     },
 
     updateOne: async function (req, res) {
+
+        let userId = req.session.userId;
+
+        if (!userId) return res.forbidden();
+
+        let quiz = await Quiz.findOne({ id: req.params.id });
+
+        if (userId != quiz.userId)
+            return res.forbidden();
+
         sails.log.debug("Update single quiz....")
-        let quiz = await Quiz.updateOne({ id: req.params.id }).set(req.body);
+        await Quiz.updateOne({ id: req.params.id }).set(req.body);
         res.redirect('/quiz/' + req.params.id);
     },
 
 
     destroyOne: async function (req, res) {
+        let userId = req.session.userId;
+
+        if (!userId) return res.forbidden();
+
+        let quiz = await Quiz.findOne({ id: req.params.id });
+
+        if (userId != quiz.userId)
+            return res.forbidden();
+            
         sails.log.debug("Destroy single quiz....")
         await Quiz.destroyOne({ id: req.params.id });
         res.redirect('/quiz');

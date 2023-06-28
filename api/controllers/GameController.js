@@ -19,8 +19,6 @@ module.exports = {
     var socket = req.socket;
     var sessionid = -1
 
-    // var sessionid = Math.floor(100000 + Math.random() * 900000); // generates random 6 digits number
-
     var startedQuiz = await StartedQuiz.findOne({ startedBy: me });
 
     var createQuiz = async function () {

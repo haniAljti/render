@@ -13,7 +13,7 @@ module.exports = {
   findOne: async function (req, res) {
     sails.log.debug("List single category....")
     let category = await Category.findOne({ id: req.params.id });
-    // TODO populate quiz for current category
+
     let quizes = await Quiz.find({
         category: req.params.id
     })
