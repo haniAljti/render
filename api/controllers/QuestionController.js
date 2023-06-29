@@ -56,8 +56,7 @@ module.exports = {
 
         var questionData = {
             title: req.body.title,
-            question: req.body.question,
-            quiz: req.params.id
+            question: req.body.question
         };
 
         var updatedQuestion = await Question.updateOne({ id: req.params.id }).set(questionData)
